@@ -1,0 +1,58 @@
+import React from "react";
+import { assets } from "../../../../assets/assets";
+
+const ProductCard = ({ product }) => {
+  return (
+    <div className="group bg-white rounded-2xl w-full flex flex-col items-start shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] overflow-hidden">
+      {/* Image Section */}
+      <div className="w-full aspect-square flex items-center justify-center bg-[#F8F8F8]">
+        <img
+          src={product.image}
+          alt={product.name}
+          className="w-[80%] h-[80%] object-contain group-hover:scale-105 transition-transform duration-300"
+        />
+      </div>
+
+      {/* Content Area */}
+      <div className="p-3 sm:p-4 mt-2 sm:mt-3 w-full flex flex-col">
+        <h2 className="text-[#3F3F46] font-outfit text-xs sm:text-sm font-normal leading-tight line-clamp-2">
+          {product.name}
+        </h2>
+
+        <div className="flex items-center mt-1 gap-x-1">
+          <img src={assets.star} alt="rating" className="w-3 h-3" />
+          <span className="text-[#1B3022] font-outfit text-xs font-medium leading-4">
+            {product.rating}
+          </span>
+          <span className="text-[#6B7280] font-outfit text-xs font-normal leading-4">
+            ({product.reviewCount})
+          </span>
+        </div>
+
+        <div className="flex items-center justify-between mt-2 sm:mt-3">
+          {/* Price Section */}
+          <div className="flex flex-col">
+            <div className="flex items-baseline gap-x-1">
+              <h4 className="text-[#1B3022] font-outfit text-xs sm:text-sm font-semibold leading-4">
+                ${product.price}
+              </h4>
+              <span className="text-[10px] font-normal text-gray-500 font-outfit">
+                /{product.unit}
+              </span>
+            </div>
+            <del className="text-gray-400 font-outfit text-[11px] font-normal leading-3">
+              ${product.originalPrice}
+            </del>
+          </div>
+
+          {/* Add Button */}
+          <button className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-[#F97316] rounded-full text-white font-bold text-xl shadow-sm hover:bg-orange-600 transition-all active:scale-95 cursor-pointer">
+            <span className="mb-0.5">+</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default ProductCard;
