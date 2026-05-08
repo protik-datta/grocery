@@ -4,7 +4,7 @@ import Categories from "./components/Categories";
 import PopularProducts from "./components/popularProduct/PopularProducts";
 import PromoBanner from "./components/PromoBanner";
 import Newsletter from "./components/Newsletter";
-import OrganicProducts from './components/popularProduct/OrganicProducts';
+import OrganicProducts from "./components/organicProduct/OrganicProducts";
 
 const Home = () => {
   return (
@@ -13,7 +13,7 @@ const Home = () => {
       <Stats />
       <Categories />
       <PopularProducts />
-      <OrganicProducts/>
+      <OrganicProducts />
       <PromoBanner />
       <Newsletter />
     </>

@@ -22,15 +22,14 @@ const OrganicProducts = () => {
           </p>
         </div>
 
-        {!showAll &&
-          organicProducts > 5 && (
-            <button
-              className="flex items-center text-[#F97316] text-sm font-semibold leading-5 gap-1 cursor-pointer shrink-0"
-              onClick={() => setShowAll(true)}
-            >
-              View All <ArrowRight size={17} />
-            </button>
-          )}
+        {!showAll && organicProducts > 5 && (
+          <button
+            className="flex items-center text-[#F97316] text-sm font-semibold leading-5 gap-1 cursor-pointer shrink-0"
+            onClick={() => setShowAll(true)}
+          >
+            View All <ArrowRight size={17} />
+          </button>
+        )}
       </div>
 
       <OrganicProductContainer limit={showAll ? undefined : 10} />

@@ -1,4 +1,4 @@
-import ProductCard from "./ProductCard";
+import ProductCard from "../ProductCard";
 import { dummyProducts } from "../../../../assets/assets";
 
 const OrganicProductContainer = ({ limit }) => {
