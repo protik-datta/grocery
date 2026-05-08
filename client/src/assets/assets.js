@@ -24,6 +24,7 @@ import message from "./message.svg";
 import facebook from "./facebook.svg";
 import instagram from "./instagram.svg";
 import x from "./x.svg";
+import home from "./home.svg";
 
 export const assets = {
   delivery_truck,
@@ -41,6 +42,7 @@ export const assets = {
   facebook,
   instagram,
   x,
+  home,
 };
 
 export const categoriesData = [
@@ -59,14 +61,31 @@ export const categoriesData = [
   { slug: "dairy-eggs", name: "Dairy & Eggs", image: dairy_eggs },
 ];
 
+export const sortOptions = [
+  {
+    label: "Newest",
+    value: "newest",
+  },
+  {
+    label: "Price: Low → High",
+    value: "price-asc",
+  },
+  {
+    label: "Price: High → Low",
+    value: "price-desc",
+  },
+  {
+    label: "Top Rated",
+    value: "top-rated",
+  },
+  {
+    label: "A → Z",
+    value: "a-z",
+  },
+];
+
 export const deliveryPartnerLoginImage =
   "https://images.unsplash.com/photo-1610832958506-aa56368176cf?w=200";
-
-export const appPromoBannerData = {
-  title: "Get fresh groceries in minutes",
-  description:
-    "Download the Instacart app for exclusive deals, real-time tracking, and the freshest selection delivered right to your door.",
-};
 
 export const footerData = {
   brand: {

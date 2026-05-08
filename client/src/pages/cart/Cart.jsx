@@ -149,7 +149,7 @@ const Cart = () => {
               <span>Total</span>
               <span>${subtotal.toFixed(2)}</span>
             </div>
-            <button className="w-full bg-[#F97316] hover:bg-[#ea6c0a] active:scale-[0.98] transition-all text-white font-semibold text-[15px] py-4 rounded-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer shadow-lg shadow-orange-200">
+            <button className="w-full bg-[#F97316] transition-all text-white font-semibold text-[15px] py-4 rounded-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer">
               Proceed to Checkout
               <ArrowRight size={18} />
             </button>

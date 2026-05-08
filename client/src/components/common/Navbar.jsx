@@ -22,7 +22,7 @@ const Navbar = () => {
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   const navLinkClass = ({ isActive }) =>
-    `text-[14px] font-medium leading-5 transition-colors duration-200
+    `text-[14px] font-normal leading-5 transition-colors duration-200
    ${isActive ? "text-[#F97316]" : "text-[#52525C] hover:text-black"}`;
 
   return (
