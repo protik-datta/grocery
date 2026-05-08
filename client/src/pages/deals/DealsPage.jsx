@@ -1,13 +1,13 @@
 import DealsBanner from "./DealsBanner";
 import DealsProductContainer from "./DealsProductContainer";
 
-const Deals = () => {
+const DealsPage = () => {
   return (
     <>
       <DealsBanner />
-      <DealsProductContainer/>
+      <DealsProductContainer />
     </>
   );
 };
 
-export default Deals;
+export default DealsPage;
