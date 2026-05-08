@@ -1,5 +1,5 @@
-import ProductCard from "../ProductCard";
 import { dummyProducts } from "../../../../assets/assets";
+import ProductCard from '../../../../shared/ProductCard';
 
 const OrganicProductContainer = ({ limit }) => {
   const organicProducts = dummyProducts.filter((i) => i.isOrganic === true);

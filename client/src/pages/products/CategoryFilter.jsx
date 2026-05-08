@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { assets, categoriesData } from "../../assets/assets";
 
 const CategoryFilter = ({ isMobile = false, onClose }) => {
@@ -10,6 +10,8 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
 
   const minPriceFromUrl = searchParams.get("minPrice") || "";
   const maxPriceFromUrl = searchParams.get("maxPrice") || "";
+
+  const navigate = useNavigate();
 
   const categories = useMemo(() => {
     return [
@@ -22,6 +24,7 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     categories.find((cat) => cat.slug === currentCategorySlug)?.name ||
     "All Categories";
 
+  // handle category change
   const handleCategoryChange = (slug) => {
     const params = new URLSearchParams(searchParams);
     if (slug === "all-categories") {
@@ -33,6 +36,7 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     onClose?.();
   };
 
+  // handle price change
   const handlePriceChange = (type, value) => {
     const params = new URLSearchParams(searchParams);
     if (value) {
@@ -43,6 +47,7 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     setSearchParams(params);
   };
 
+  // categories jsx
   const categoriesJSX = (
     <div className="flex flex-col gap-1.5">
       {categories.map((cat) => {
@@ -64,6 +69,7 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     </div>
   );
 
+  // price jsx
   const priceJSX = (
     <div className="flex items-center gap-3">
       <input
@@ -84,6 +90,7 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     </div>
   );
 
+  // clear
   const clearBtn = (categoryFromUrl || minPriceFromUrl || maxPriceFromUrl) && (
     <button
       onClick={() => {
@@ -117,7 +124,12 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     <div className="py-6.5">
       {/* top bar */}
       <div className="flex items-center">
-        <img src={assets.home} alt="home" className="w-5 h-5 object-contain" />
+        <img
+          src={assets.home}
+          alt="home"
+          className="w-5 h-5 object-contain cursor-pointer"
+          onClick={() => navigate("/")}
+        />
         <p className="text-[#1B3022] text-[14px] font-medium leading-6">
           <span className="text-gray-500 px-2">/</span>
           {activeName}

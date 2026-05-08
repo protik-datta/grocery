@@ -25,6 +25,7 @@ import facebook from "./facebook.svg";
 import instagram from "./instagram.svg";
 import x from "./x.svg";
 import home from "./home.svg";
+import flash from "./flash.svg";
 
 export const assets = {
   delivery_truck,
@@ -43,6 +44,7 @@ export const assets = {
   instagram,
   x,
   home,
+  flash,
 };
 
 export const categoriesData = [
@@ -145,6 +147,28 @@ export const iconsForLeafpad = {
   truck: "https://cdn-icons-png.flaticon.com/512/3097/3097180.png",
   destination: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
 };
+
+export const REVIEWERS = [
+  { name: "Ananya S.", avatar: "AS" },
+  { name: "Rahul M.", avatar: "RM" },
+  { name: "Priya K.", avatar: "PK" },
+  { name: "Vikram J.", avatar: "VJ" },
+  { name: "Meera D.", avatar: "MD" },
+  { name: "Arjun R.", avatar: "AR" },
+  { name: "Sneha T.", avatar: "ST" },
+  { name: "Karan P.", avatar: "KP" },
+];
+
+export const COMMENTS = [
+  "Absolutely love this product! Fresh and great quality. Will definitely order again.",
+  "Good value for the price. Packaging was neat and delivery was on time.",
+  "Quality is decent but I expected it to be a bit fresher. Still a solid buy overall.",
+  "This has become a staple in my kitchen now. Highly recommended for everyone!",
+  "Exceeded my expectations. The taste and freshness were top-notch. Five stars!",
+  "Pretty good! Not the absolute best I've had, but definitely worth the price.",
+  "Arrived in perfect condition. Very satisfied with the purchase, ordering more soon.",
+  "Great product, my family loved it. The organic quality really shows in the taste.",
+];
 
 export const dummyProducts = [
   {

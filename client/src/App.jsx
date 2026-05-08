@@ -3,7 +3,7 @@ import Layout from "./components/layout/Layout";
 import Home from "./pages/home/Home";
 import Products from "./pages/products/Products";
 import Cart from "./pages/cart/Cart";
-import Deals from "./pages/deals/deals";
+import Deals from "./pages/deals/Deals";
 
 const App = () => {
   return (

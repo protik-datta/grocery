@@ -1,5 +1,5 @@
-import ProductCard from "../ProductCard";
 import { dummyProducts } from "../../../../assets/assets";
+import ProductCard from '../../../../shared/ProductCard';
 
 const ProductContainer = ({ limit }) => {
   const popularProducts = dummyProducts.filter((i) => i.isPopular === true);
