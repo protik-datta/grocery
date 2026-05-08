@@ -1,4 +1,4 @@
-import { Plus } from 'lucide-react';
+import { Plus } from "lucide-react";
 import { assets } from "../../../assets/assets";
 import useCartStore from "../../../store/cartStore";
 

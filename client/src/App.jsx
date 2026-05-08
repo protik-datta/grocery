@@ -3,6 +3,7 @@ import Layout from "./components/layout/Layout";
 import Home from "./pages/home/Home";
 import Products from "./pages/products/Products";
 import Cart from "./pages/cart/Cart";
+import Deals from "./pages/deals/deals";
 
 const App = () => {
   return (
@@ -13,6 +14,7 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/deals" element={<Deals />} />
         </Route>
       </Routes>
     </BrowserRouter>
