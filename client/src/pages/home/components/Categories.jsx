@@ -1,4 +1,3 @@
-import React from "react";
 import Container from "../../../components/common/Container";
 import { categoriesData } from "../../../assets/assets";
 

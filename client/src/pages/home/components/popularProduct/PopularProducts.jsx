@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Container from "../../../../components/common/Container";
 import ProductContainer from "./ProductContainer";
 import { ArrowRight } from "lucide-react";
+import { dummyProducts } from "../../../../assets/assets";
 
 const PopularProducts = () => {
+  const popularProducts = dummyProducts.filter(
+    (i) => i.isPopular === true,
+  ).length;
   const [showAll, setShowAll] = useState(false);
 
   return (
@@ -18,7 +22,7 @@ const PopularProducts = () => {
           </p>
         </div>
 
-        {!showAll && (
+        {!showAll && popularProducts > 5 && (
           <button
             className="flex items-center text-[#F97316] text-sm font-semibold leading-5 gap-1 cursor-pointer shrink-0"
             onClick={() => setShowAll(true)}

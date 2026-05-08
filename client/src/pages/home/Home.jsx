@@ -1,10 +1,10 @@
-import React from "react";
 import Banner from "./components/Banner";
 import Stats from "./components/Stats";
 import Categories from "./components/Categories";
 import PopularProducts from "./components/popularProduct/PopularProducts";
 import PromoBanner from "./components/PromoBanner";
 import Newsletter from "./components/Newsletter";
+import OrganicProducts from './components/popularProduct/OrganicProducts';
 
 const Home = () => {
   return (
@@ -13,6 +13,7 @@ const Home = () => {
       <Stats />
       <Categories />
       <PopularProducts />
+      <OrganicProducts/>
       <PromoBanner />
       <Newsletter />
     </>

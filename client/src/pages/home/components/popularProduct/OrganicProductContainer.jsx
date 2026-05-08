@@ -1,11 +1,11 @@
 import ProductCard from "./ProductCard";
 import { dummyProducts } from "../../../../assets/assets";
 
-const ProductContainer = ({ limit }) => {
-  const popularProducts = dummyProducts.filter((i) => i.isPopular === true);
+const OrganicProductContainer = ({ limit }) => {
+  const organicProducts = dummyProducts.filter((i) => i.isOrganic === true);
   const displayProducts = limit
-    ? popularProducts.slice(0, limit)
-    : popularProducts;
+    ? organicProducts.slice(0, limit)
+    : organicProducts;
   return (
     <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-x-3 gap-y-6">
       {displayProducts.map((item) => (
@@ -15,4 +15,4 @@ const ProductContainer = ({ limit }) => {
   );
 };
 
-export default ProductContainer;
+export default OrganicProductContainer;

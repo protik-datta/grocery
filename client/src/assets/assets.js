@@ -1,8 +1,4 @@
-import {
-  MapPinIcon,
-  PhoneIcon,
-  MailIcon,
-} from "lucide-react";
+import { MapPinIcon, PhoneIcon, MailIcon } from "lucide-react";
 
 import hero_bg from "./Hero.png";
 import delivery_truck from "./delivery_truck.svg";
@@ -16,7 +12,7 @@ import personal_care from "./personal_care.png";
 import baby_care from "./baby_care.png";
 import meat_seafood from "./meat_seafood.png";
 import logo from "./logo.svg";
-import footer_logo from './footer_logo.svg'
+import footer_logo from "./footer_logo.svg";
 import cart from "./cart.svg";
 import leaf from "./leaf.svg";
 import leaf_1 from "./leaf-1.svg";
@@ -25,9 +21,9 @@ import clock from "./clock.svg";
 import protection from "./protection.svg";
 import star from "./star.svg";
 import message from "./message.svg";
-import facebook from './facebook.svg'
-import instagram from './instagram.svg'
-import x from './x.svg'
+import facebook from "./facebook.svg";
+import instagram from "./instagram.svg";
+import x from "./x.svg";
 
 export const assets = {
   delivery_truck,
@@ -44,7 +40,7 @@ export const assets = {
   message,
   facebook,
   instagram,
-  x
+  x,
 };
 
 export const categoriesData = [
@@ -151,6 +147,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.118Z",
     discount: 10,
     id: "69c22613ae75a98c7cd13b3b",
+    isPopular: false,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b37",
@@ -171,6 +170,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.118Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b37",
+    isPopular: false,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b3a",
@@ -191,6 +193,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.118Z",
     discount: 13,
     id: "69c22613ae75a98c7cd13b3a",
+    isPopular: false,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b36",
@@ -211,6 +216,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.118Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b36",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b39",
@@ -231,6 +239,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.118Z",
     discount: 14,
     id: "69c22613ae75a98c7cd13b39",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b38",
@@ -251,6 +262,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.118Z",
     discount: 9,
     id: "69c22613ae75a98c7cd13b38",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b30",
@@ -271,6 +285,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 20,
     id: "69c22613ae75a98c7cd13b30",
+    isPopular: false,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b23",
@@ -292,6 +309,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 12,
     id: "69c22613ae75a98c7cd13b23",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b2f",
@@ -312,6 +332,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 6,
     id: "69c22613ae75a98c7cd13b2f",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b35",
@@ -324,7 +347,7 @@ export const dummyProducts = [
     category: "pantry-staples",
     unit: "1kg",
     stock: 100,
-    isOrganic: false,
+    isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
     __v: 0,
@@ -332,6 +355,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 8,
     id: "69c22613ae75a98c7cd13b35",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b2d",
@@ -352,6 +378,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 6,
     id: "69c22613ae75a98c7cd13b2d",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b28",
@@ -365,7 +394,7 @@ export const dummyProducts = [
     category: "fruits-vegetables",
     unit: "1kg",
     stock: 100,
-    isOrganic: false,
+    isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
     __v: 0,
@@ -373,6 +402,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 10,
     id: "69c22613ae75a98c7cd13b28",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b33",
@@ -385,7 +417,7 @@ export const dummyProducts = [
     category: "pantry-staples",
     unit: "5kg",
     stock: 100,
-    isOrganic: false,
+    isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
     __v: 0,
@@ -393,6 +425,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 5,
     id: "69c22613ae75a98c7cd13b33",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b25",
@@ -405,7 +440,7 @@ export const dummyProducts = [
     category: "fruits-vegetables",
     unit: "500g",
     stock: 100,
-    isOrganic: false,
+    isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
     __v: 0,
@@ -413,6 +448,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 10,
     id: "69c22613ae75a98c7cd13b25",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b31",
@@ -433,6 +471,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 8,
     id: "69c22613ae75a98c7cd13b31",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b24",
@@ -453,6 +494,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 17,
     id: "69c22613ae75a98c7cd13b24",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b27",
@@ -474,6 +518,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 6,
     id: "69c22613ae75a98c7cd13b27",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b34",
@@ -494,6 +541,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 8,
     id: "69c22613ae75a98c7cd13b34",
+    isPopular: false,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b2a",
@@ -515,6 +565,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b2a",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b32",
@@ -535,6 +588,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b32",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b2c",
@@ -556,6 +612,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 6,
     id: "69c22613ae75a98c7cd13b2c",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b29",
@@ -577,6 +636,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b29",
+    isPopular: false,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b22",
@@ -598,6 +660,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b22",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b21",
@@ -619,6 +684,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 13,
     id: "69c22613ae75a98c7cd13b21",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b2e",
@@ -640,6 +708,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 7,
     id: "69c22613ae75a98c7cd13b2e",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b2b",
@@ -660,6 +731,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 8,
     id: "69c22613ae75a98c7cd13b2b",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
   {
     _id: "69c22613ae75a98c7cd13b26",
@@ -680,6 +754,9 @@ export const dummyProducts = [
     updatedAt: "2026-03-24T05:50:11.117Z",
     discount: 10,
     id: "69c22613ae75a98c7cd13b26",
+    isPopular: true,
+    isNew: false,
+    isTrending: true,
   },
 ];
 

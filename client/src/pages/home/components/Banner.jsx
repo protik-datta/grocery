@@ -1,4 +1,3 @@
-import React from "react";
 import { assets } from "../../../assets/assets";
 import Container from "../../../components/common/Container";
 import { ArrowRight } from "lucide-react";
