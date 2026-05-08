@@ -9,7 +9,14 @@ const ProductCard = ({ product }) => {
   return (
     <div className="group bg-white rounded-2xl w-full flex flex-col items-start shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] overflow-hidden">
       {/* Image Section */}
-      <div className="w-full aspect-square flex items-center justify-center bg-[#F8F8F8]">
+      <div className="relative w-full aspect-square flex items-center justify-center bg-[#F8F8F8]">
+        {/* Discount Badge */}
+        {product.discount > 0 && (
+          <span className="absolute top-2.5 left-2.5 bg-[#F97316] text-white text-[10px] font-semibold px-2 py-0.5 rounded-md">
+            {product.discount}% OFF
+          </span>
+        )}
+
         <img
           src={product.image}
           alt={product.name}
