@@ -1,6 +1,11 @@
+import { Plus } from 'lucide-react';
 import { assets } from "../../../assets/assets";
+import useCartStore from "../../../store/cartStore";
 
 const ProductCard = ({ product }) => {
+  const { addItem, items } = useCartStore();
+  const cartItem = items.find((i) => i.product._id === product._id);
+  const quantity = cartItem?.quantity || 0;
   return (
     <div className="group bg-white rounded-2xl w-full flex flex-col items-start shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] overflow-hidden">
       {/* Image Section */}
@@ -45,8 +50,19 @@ const ProductCard = ({ product }) => {
           </div>
 
           {/* Add Button */}
-          <button className="w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center bg-[#F97316] rounded-full text-white font-bold text-xl shadow-sm hover:bg-orange-600 transition-all active:scale-95 cursor-pointer">
-            <span className="mb-0.5">+</span>
+          <button
+            className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-white font-bold shadow-sm transition-all active:scale-95 cursor-pointer ${
+              quantity > 0
+                ? "bg-[#032E15] hover:bg-[#1B3022]"
+                : "bg-[#F97316] hover:bg-orange-600"
+            }`}
+            onClick={() => addItem(product)}
+          >
+            {quantity > 0 ? (
+              <span className="text-xs font-bold">{quantity}</span>
+            ) : (
+              <Plus size={15} />
+            )}
           </button>
         </div>
       </div>

@@ -22,7 +22,7 @@ const OrganicProducts = () => {
           </p>
         </div>
 
-        {!showAll && organicProducts > 5 && (
+        {!showAll && organicProducts > 10 && (
           <button
             className="flex items-center text-[#F97316] text-sm font-semibold leading-5 gap-1 cursor-pointer shrink-0"
             onClick={() => setShowAll(true)}

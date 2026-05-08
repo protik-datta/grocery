@@ -4,6 +4,7 @@ import { assets } from "../../assets/assets";
 import { Link, NavLink } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
 import UserDropdown from "./UserDropdown";
+import useCartStore from "../../store/cartStore";
 
 const navItems = [
   { id: 1, label: "Home", path: "/" },
@@ -14,9 +15,11 @@ const navItems = [
 const Navbar = () => {
   const [user] = useState("Protik");
   const [userEmail] = useState("protik@gmail.com");
-  const [itemNum] = useState(4);
   const [mobileNav, setMobileNav] = useState(false);
   const [mobileSearch, setMobileSearch] = useState(false);
+  const { openCart, items } = useCartStore();
+
+  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   const navLinkClass = ({ isActive }) =>
     `text-[14px] font-medium leading-5 transition-colors duration-200
@@ -69,11 +72,13 @@ const Navbar = () => {
             </button>
 
             {/* Cart */}
-            <div className="relative cursor-pointer">
+            <div className="relative cursor-pointer" onClick={openCart}>
               <img src={assets.cart} alt="cart" className="w-5 h-5" />
-              {!itemNum ? "" : (
+              {!totalItems ? (
+                ""
+              ) : (
                 <span className="bg-[#F97316] rounded-full flex items-center justify-center text-white text-[10px] w-4 h-4 absolute -top-3 -right-3">
-                  {itemNum}
+                  {totalItems}
                 </span>
               )}
             </div>
