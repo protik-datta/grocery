@@ -5,7 +5,7 @@ const Deals = () => {
   return (
     <>
       <DealsBanner />
-      <DealsProductContainer />
+      <DealsProductContainer/>
     </>
   );
 };
