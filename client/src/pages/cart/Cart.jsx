@@ -75,7 +75,7 @@ const Cart = () => {
                 className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 hover:bg-gray-100/80 transition-colors"
               >
                 {/* Image */}
-                <div className="w-16 h-16 rounded-xl bg-white flex items-center justify-center shrink-0 overflow-hidden shadow-sm">
+                <div className="w-16 h-16 flex items-center justify-center shrink-0 overflow-hidden">
                   <img
                     src={product.image}
                     alt={product.name}
@@ -96,7 +96,7 @@ const Cart = () => {
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       onClick={() => updateQuantity(product._id, quantity - 1)}
-                      className="w-6 h-6 rounded-lg bg-white border border-gray-200 flex items-center justify-center hover:bg-gray-50 transition-colors cursor-pointer shadow-sm"
+                      className="w-6 h-6 rounded-lg bg-white border border-gray-200 flex items-center justify-center transition-colors cursor-pointer"
                     >
                       <Minus size={11} className="text-gray-600" />
                     </button>
@@ -105,9 +105,9 @@ const Cart = () => {
                     </span>
                     <button
                       onClick={() => updateQuantity(product._id, quantity + 1)}
-                      className="w-6 h-6 rounded-lg bg-[#032E15] flex items-center justify-center hover:bg-[#1B3022] transition-colors cursor-pointer shadow-sm"
+                      className="w-6 h-6 rounded-lg bg-white flex items-center justify-center transition-colors cursor-pointer border-gray-200 border"
                     >
-                      <Plus size={11} className="text-white" />
+                      <Plus size={11} className="text-gray-600" />
                     </button>
                   </div>
                 </div>

@@ -1,15 +1,21 @@
 import { Plus } from "lucide-react";
 import { assets } from "../assets/assets";
 import useCartStore from "../store/cartStore";
+import { useNavigate } from "react-router-dom";
 
 const ProductCard = ({ product }) => {
   const { addItem, items } = useCartStore();
   const cartItem = items.find((i) => i.product._id === product._id);
   const quantity = cartItem?.quantity || 0;
+
+  const navigate = useNavigate();
   return (
-    <div className="group bg-white rounded-2xl w-full flex flex-col items-start shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] overflow-hidden">
+    <div
+      className="group bg-white rounded-2xl w-full flex flex-col items-start shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] overflow-hidden"
+      onClick={() => navigate(`/products/${product.category}/${product.slug}`)}
+    >
       {/* Image Section */}
-      <div className="relative w-full aspect-square flex items-center justify-center bg-[#F8F8F8]">
+      <div className="relative w-full aspect-square flex items-center justify-center">
         {/* Discount Badge */}
         {product.discount > 0 && (
           <span className="absolute top-2.5 left-2.5 bg-[#F97316] text-white text-[10px] font-semibold px-2 py-0.5 rounded-md">

@@ -10,25 +10,21 @@ const useCartStore = create(
       openCart: () => set({ isOpen: true }),
       closeCart: () => set({ isOpen: false }),
 
-      addItem: (product) => {
+      addItem: (product, quantity = 1) => {
         const items = get().items;
-
         const existing = items.find((i) => i.product._id === product._id);
 
         if (existing) {
           set({
             items: items.map((i) =>
               i.product._id === product._id
-                ? {
-                    ...i,
-                    quantity: i.quantity + 1,
-                  }
+                ? { ...i, quantity: i.quantity + quantity }
                 : i,
             ),
           });
         } else {
           set({
-            items: [...items, { product, quantity: 1 }],
+            items: [...items, { product, quantity }],
           });
         }
 

@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { dummyProducts, sortOptions } from "../../assets/assets";
+import { categoriesData, dummyProducts, sortOptions } from "../../assets/assets";
 import {
   SearchX,
   X,
@@ -29,10 +29,8 @@ const FilterProductContainer = ({ onFilterOpen }) => {
 
   const categoryName = useMemo(() => {
     if (!category) return "All";
-    return category
-      .split("-")
-      .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
-      .join(" ");
+
+    return categoriesData.find((item) => item.slug === category)?.name || "All";
   }, [category]);
 
   const filteredProducts = useMemo(() => {

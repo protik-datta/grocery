@@ -4,6 +4,7 @@ import Home from "./pages/home/Home";
 import Products from "./pages/products/Products";
 import Cart from "./pages/cart/Cart";
 import DealsPage from "./pages/deals/DealsPage";
+import ProductDetails from "./pages/productDetails/ProductDetails";
 
 const App = () => {
   return (
@@ -14,6 +15,10 @@ const App = () => {
         <Route element={<Layout />}>
           <Route path="/" element={<Home />} />
           <Route path="/products" element={<Products />} />
+          <Route
+            path="/products/:category/:slug"
+            element={<ProductDetails />}
+          />
           <Route path="/deals" element={<DealsPage />} />
         </Route>
       </Routes>

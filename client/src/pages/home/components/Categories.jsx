@@ -1,7 +1,13 @@
 import Container from "../../../components/common/Container";
 import { categoriesData } from "../../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const Categories = () => {
+  const navigate = useNavigate();
+
+  const onCategoryClick = (category) => {
+    navigate(`/products?category=${category}`);
+  };
   return (
     <Container className="py-16">
       {/* heading */}
@@ -20,6 +26,7 @@ const Categories = () => {
           <div
             className="flex flex-col items-center justify-center cursor-pointer"
             key={item.slug}
+            onClick={() => onCategoryClick(item.slug)}
           >
             <div className="flex w-26 h-26 p-2 flex-col justify-center items-start rounded-2xl bg-[#FFEDD4]">
               <img src={item.image} alt={item.name} className="object-cover" />

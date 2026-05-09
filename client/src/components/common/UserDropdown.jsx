@@ -5,7 +5,6 @@ import {
   ShoppingBag,
   MapPin,
   ArrowUpRight,
-  Shield,
   LogOut,
   X,
 } from "lucide-react";

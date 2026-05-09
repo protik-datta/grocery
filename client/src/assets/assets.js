@@ -26,6 +26,8 @@ import instagram from "./instagram.svg";
 import x from "./x.svg";
 import home from "./home.svg";
 import flash from "./flash.svg";
+import blank_star from "./blank_star.svg";
+import thumbs_up from './thumb_up.svg';
 
 export const assets = {
   delivery_truck,
@@ -45,6 +47,8 @@ export const assets = {
   x,
   home,
   flash,
+  blank_star,
+  thumbs_up,
 };
 
 export const categoriesData = [
@@ -148,28 +152,6 @@ export const iconsForLeafpad = {
   destination: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
 };
 
-export const REVIEWERS = [
-  { name: "Ananya S.", avatar: "AS" },
-  { name: "Rahul M.", avatar: "RM" },
-  { name: "Priya K.", avatar: "PK" },
-  { name: "Vikram J.", avatar: "VJ" },
-  { name: "Meera D.", avatar: "MD" },
-  { name: "Arjun R.", avatar: "AR" },
-  { name: "Sneha T.", avatar: "ST" },
-  { name: "Karan P.", avatar: "KP" },
-];
-
-export const COMMENTS = [
-  "Absolutely love this product! Fresh and great quality. Will definitely order again.",
-  "Good value for the price. Packaging was neat and delivery was on time.",
-  "Quality is decent but I expected it to be a bit fresher. Still a solid buy overall.",
-  "This has become a staple in my kitchen now. Highly recommended for everyone!",
-  "Exceeded my expectations. The taste and freshness were top-notch. Five stars!",
-  "Pretty good! Not the absolute best I've had, but definitely worth the price.",
-  "Arrived in perfect condition. Very satisfied with the purchase, ordering more soon.",
-  "Great product, my family loved it. The organic quality really shows in the taste.",
-];
-
 export const dummyProducts = [
   {
     _id: "69c22613ae75a98c7cd13b3b",
@@ -180,10 +162,58 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/zvoeqbvrbrt7atqj0dbu.png",
     category: "bakery",
+    slug: "butter-croissant-100g",
     unit: "100g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
-    rating: 4.5,
+    rating: 5,
     reviewCount: 12,
     __v: 0,
     createdAt: "2026-03-24T05:50:11.118Z",
@@ -203,8 +233,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/cxrrgnf12xuhkr4dyhi2.png",
     category: "pantry-staples",
+    slug: "organic-quinoa-500g",
     unit: "500g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -226,8 +304,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/vy1xa7zovcu22smzapzv.png",
     category: "bakery",
+    slug: "brown-bread-400g",
     unit: "400g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -249,8 +375,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/spb5sgy8g24rned9nwog.png",
     category: "pantry-staples",
+    slug: "barley-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -272,8 +446,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/vnzb2qbwtpab5gnqvx0f.png",
     category: "pantry-staples",
+    slug: "knorr-cup-soup-70g",
     unit: "70g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -295,8 +517,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/dsep7owmwvfrukzbslqo.png",
     category: "pantry-staples",
+    slug: "maggi-noodles-280g",
     unit: "280g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -318,8 +588,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/daiglpvgna1dlhjplbve.png",
     category: "beverages",
+    slug: "sprite-1.5l",
     unit: "1.5L",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -342,8 +660,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/ceqgisupuizyste9aifg.png",
     category: "fruits-vegetables",
+    slug: "carrot-500g",
     unit: "500g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -365,8 +731,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/eljxcdud6fduwfim5rdx.png",
     category: "beverages",
+    slug: "coca-cola-1.5l",
     unit: "1.5L",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -388,8 +802,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/dboutcrkdjhoxcvbbqne.png",
     category: "pantry-staples",
+    slug: "brown-rice-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -411,8 +873,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/cnjrpbcnqesqxy1wr30g.png",
     category: "dairy-eggs",
+    slug: "eggs-12-pcs",
     unit: "12pcs",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -435,8 +945,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/dsnmko6gqtyw31okby80.png",
     category: "fruits-vegetables",
+    slug: "banana-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -458,8 +1016,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/evuovl2nlwdjukosfz23.png",
     category: "pantry-staples",
+    slug: "basmati-rice-5kg",
     unit: "5kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -481,8 +1087,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/wnvtwlm2tphqburhsmyc.png",
     category: "fruits-vegetables",
+    slug: "onion-500g",
     unit: "500g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -504,8 +1158,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/qt1ypzsoqni12ghf2ryp.png",
     category: "beverages",
+    slug: "7-up-1.5l",
     unit: "1.5L",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -527,8 +1229,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/bhrtl76sscvmeiq4kchm.png",
     category: "fruits-vegetables",
+    slug: "spinach-500g",
     unit: "500g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -551,8 +1301,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/r1wxfortw5h12g7egx7k.png",
     category: "fruits-vegetables",
+    slug: "orange-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -574,8 +1372,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/ooitbkcjcky0gkjmkatb.png",
     category: "pantry-staples",
+    slug: "wheat-flour-5kg",
     unit: "5kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -598,8 +1444,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/jsmb7caaokhnyci2coga.png",
     category: "fruits-vegetables",
+    slug: "grapes-500g",
     unit: "500g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -621,8 +1515,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/nexecd3mgyzrpeun1bee.png",
     category: "beverages",
+    slug: "fanta-1.5l",
     unit: "1.5L",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -645,8 +1587,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/vihqr6wquv57byurvz46.png",
     category: "dairy-eggs",
+    slug: "paneer-200g",
     unit: "200g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -669,8 +1659,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/nb1mpxuo4fdcik6ey5yj.png",
     category: "fruits-vegetables",
+    slug: "mango-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -693,8 +1731,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/kdbfytxisrjymgy0ubhk.png",
     category: "fruits-vegetables",
+    slug: "tomato-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -717,8 +1803,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/tzibj2ntsnbn4e0u5kwv.png",
     category: "fruits-vegetables",
+    slug: "potato-500g",
     unit: "500g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: true,
     rating: 4.5,
     reviewCount: 12,
@@ -741,8 +1875,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/gek3mmiig3lixlkpxks8.png",
     category: "dairy-eggs",
+    slug: "cheese-200g",
     unit: "200g",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -764,8 +1946,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/ooamzy497lhsj2gjuwby.png",
     category: "dairy-eggs",
+    slug: "amul-milk-1l",
     unit: "1L",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
@@ -787,8 +2017,56 @@ export const dummyProducts = [
     image:
       "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/pjt1y6xdo46tluemhf0o.png",
     category: "fruits-vegetables",
+    slug: "apple-1kg",
     unit: "1kg",
     stock: 100,
+    reviews: [
+      {
+        _id: "69c22613ae75a98c7cd138h7f",
+        user: "Ananya S.",
+        rating: 5,
+        comment:
+          "The croissant was absolutely delicious! Perfectly flaky and buttery. Will order again!",
+        createdAt: "2026-04-01T10:15:30Z",
+        helpful: 11,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7g",
+        user: "Rahul M.",
+        rating: 4,
+        comment:
+          "Good product overall. Could be a bit fresher but still a solid choice.",
+        createdAt: "2026-04-02T10:15:30Z",
+        helpful: 7,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7h",
+        user: "Priya K.",
+        rating: 5,
+        comment:
+          "Excellent product! The taste and quality are outstanding. Highly recommended!",
+        createdAt: "2026-04-03T10:15:30Z",
+        helpful: 15,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7i",
+        user: "Vikram J.",
+        rating: 4,
+        comment:
+          "Decent product, but not the best I've had. Still a good value for the price.",
+        createdAt: "2026-04-04T10:15:30Z",
+        helpful: 4,
+      },
+      {
+        _id: "69c22613ae75a98c7cd138h7j",
+        user: "Meera D.",
+        rating: 5,
+        comment:
+          "Outstanding product! The taste and quality are exceptional. Will definitely order again.",
+        createdAt: "2026-04-05T10:15:30Z",
+        helpful: 9,
+      },
+    ],
     isOrganic: false,
     rating: 4.5,
     reviewCount: 12,
