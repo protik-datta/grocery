@@ -93,7 +93,12 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const sortStage = SORT_MAP[sort];
 
   const [products, total] = await Promise.all([
-    Product.find(filter).sort(sortStage).skip(skip).limit(limit).lean(),
+    Product.find(filter)
+      .populate("category", "name slug imageUrl")
+      .sort(sortStage)
+      .skip(skip)
+      .limit(limit)
+      .lean(),
     Product.countDocuments(filter),
   ]);
 

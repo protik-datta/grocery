@@ -59,11 +59,14 @@ const createCategory = asyncHandler(async (req, res) => {
 const getAllCategories = asyncHandler(async (req, res) => {
   const cached = await redis.get(CACHE_KEY);
   if (cached) {
-    return res.status(200).json({
-      status: "success",
-      source: "cache",
-      data: JSON.parse(cached),
-    });
+    const parsedCache = JSON.parse(cached)
+    if(parsedCache.length > 0){
+      return res.status(200).json({
+        status: "success",
+        source: "cache",
+        data: parsedCache,
+      });
+    }
   }
 
   const categories = await Category.find({ isActive: true })

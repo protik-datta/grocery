@@ -63,18 +63,20 @@ const errorHandler = require("./src/middlewares/errorHandler.middleware");
 app.use(errorHandler);
 
 // health check api
-app.get('/api/health', (req,res)=> {
+app.get("/api/health", (req, res) => {
   res.status(200).json({
     success: true,
-    message: "Server is healthy"
-  })
-})
+    message: "Server is healthy",
+  });
+});
 
 // ------- routes -------- //
 const productRoutes = require("./src/routes/product.routes");
 app.use("/api/products", productRoutes);
 const categoryRoutes = require("./src/routes/category.routes");
 app.use("/api/categories", categoryRoutes);
+const chatbotRoutes = require("./src/routes/chatbot.routes");
+app.use("/api/chat", chatbotRoutes);
 // ------- routes -------- //
 
 module.exports = app;
