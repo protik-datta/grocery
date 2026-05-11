@@ -41,10 +41,8 @@ const ChatBot = () => {
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
 
-    // Start typing indicator
     setIsTyping(true);
 
-    // Bot reply simulate (5000ms delay as requested)
     setTimeout(() => {
       const botMsg = {
         id: Date.now() + 1,
@@ -52,8 +50,8 @@ const ChatBot = () => {
         sender: "bot",
       };
       setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false); // Stop typing indicator
-    }, 5000);
+      setIsTyping(false);
+    }, 500);
   };
 
   const handleKeyDown = (e) => {

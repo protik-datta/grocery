@@ -27,7 +27,8 @@ import x from "./x.svg";
 import home from "./home.svg";
 import flash from "./flash.svg";
 import blank_star from "./blank_star.svg";
-import thumbs_up from './thumb_up.svg';
+import thumbs_up from "./thumb_up.svg";
+import calender from "./calender.svg";
 
 export const assets = {
   delivery_truck,
@@ -49,6 +50,7 @@ export const assets = {
   flash,
   blank_star,
   thumbs_up,
+  calender,
 };
 
 export const categoriesData = [
@@ -142,7 +144,7 @@ export const statusColors = {
   Placed: "bg-blue-100 text-blue-700",
   Confirmed: "bg-indigo-100 text-indigo-700",
   Packed: "bg-purple-100 text-purple-700",
-  "Out for Delivery": "bg-app-orange/10 text-app-orange",
+  "Out for Delivery": "bg-orange-100 text-orange-600",
   Delivered: "bg-green-100 text-green-700",
   Cancelled: "bg-red-100 text-red-700",
 };
@@ -2232,6 +2234,7 @@ export const dummyDashboardOrdersData = [
       name: "Admin",
       email: "admin@example.com",
     },
+    orderNumber: "98D67DAC",
     items: [
       {
         product: "69c22613ae75a98c7cd13b3b",
@@ -2259,7 +2262,7 @@ export const dummyDashboardOrdersData = [
     deliveryFee: 0,
     tax: 18.4,
     total: 248.4,
-    status: "Delivered",
+    status: "Placed",
     statusHistory: [
       {
         status: "Placed",
@@ -2319,6 +2322,7 @@ export const dummyDashboardOrdersData = [
       lng: -74.006,
       updatedAt: "2026-04-06T08:41:27.211Z",
     },
+    orderNumber: "98D67B5E",
     _id: "69d366617ed7e54198d67dad",
     user: {
       _id: "69bb6caf448f2d818db59122",
@@ -2353,6 +2357,94 @@ export const dummyDashboardOrdersData = [
     tax: 18.4,
     total: 248.4,
     status: "Out for Delivery",
+    statusHistory: [
+      {
+        status: "Placed",
+        note: "Order placed successfully",
+        _id: "69d366617ed7e54198d67daf",
+        timestamp: "2026-04-06T07:53:05.769Z",
+      },
+      {
+        status: "Assigned",
+        note: "Assigned to Rahul",
+        _id: "69d366ab7ed7e54198d67dbe",
+        timestamp: "2026-04-06T07:54:19.796Z",
+      },
+      {
+        status: "Packed",
+        note: "Status updated to Packed",
+        _id: "69d366b37ed7e54198d67ddc",
+        timestamp: "2026-04-06T07:54:27.171Z",
+      },
+      {
+        status: "Out for Delivery",
+        note: "Status updated to Out for Delivery",
+        _id: "69d366b57ed7e54198d67e00",
+        timestamp: "2026-04-06T07:54:29.226Z",
+      },
+    ],
+    deliveryPartner: {
+      _id: "69bbfc3866db7c6cdea47ede",
+      name: "Rahul",
+      email: "rahul@example.com",
+      phone: "987654321",
+    },
+    deliveryOtp: "754730",
+    isPaid: false,
+    createdAt: "2026-04-06T07:53:05.774Z",
+    updatedAt: "2026-04-06T08:47:28.984Z",
+    __v: 4,
+  },
+  {
+    shippingAddress: {
+      label: "Home",
+      address: "New Market Road ",
+      city: "New York ",
+      state: "NY",
+      zip: "876543",
+      lat: 40.7128,
+      lng: -74.006,
+    },
+    liveLocation: {
+      lat: 40.7128,
+      lng: -74.006,
+      updatedAt: "2026-04-06T08:41:27.211Z",
+    },
+    orderNumber: "98D67B5E",
+    _id: "69d366617ed7e54198d67dad",
+    user: {
+      _id: "69bb6caf448f2d818db59122",
+      name: "Admin",
+      email: "admin@example.com",
+    },
+    items: [
+      {
+        product: "69c22613ae75a98c7cd13b3b",
+        name: "Butter Croissant 100g",
+        image:
+          "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/zvoeqbvrbrt7atqj0dbu.png",
+        price: 45,
+        quantity: 2,
+        unit: "100g",
+        _id: "69d366617ed7e54198d67dad",
+      },
+      {
+        product: "69c22613ae75a98c7cd13b36",
+        name: "Barley 1kg",
+        image:
+          "https://raw.githubusercontent.com/avinashdm/gs-images/main/greencart/spb5sgy8g24rned9nwog.png",
+        price: 140,
+        quantity: 1,
+        unit: "1kg",
+        _id: "69d366617ed7e54198d67dae",
+      },
+    ],
+    paymentMethod: "cash",
+    subtotal: 230,
+    deliveryFee: 0,
+    tax: 18.4,
+    total: 248.4,
+    status: "Delivered",
     statusHistory: [
       {
         status: "Placed",
