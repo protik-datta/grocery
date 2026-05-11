@@ -15,6 +15,12 @@ input{
   outline: none;
 }
 
+.leaflet-pane,
+.leaflet-top,
+.leaflet-bottom {
+  z-index: 10 !important;
+}
+
 /* Scrollbar width */
 /* ::-webkit-scrollbar {
   width: 8px;

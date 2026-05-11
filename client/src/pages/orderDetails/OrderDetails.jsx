@@ -3,6 +3,8 @@ import { dummyDashboardOrdersData, statusColors } from "../../assets/assets";
 import Container from "../../shared/components/common/Container";
 import { ArrowLeft } from "lucide-react";
 import OrderMap from "./OrderMap";
+import DeliveryProgress from "./DeliveryProgress";
+import DeliveryPartner from "./DeliveryPartner";
 
 const OrderDetails = () => {
   const { id } = useParams();
@@ -49,7 +51,13 @@ const OrderDetails = () => {
         </div>
 
         {/* map location */}
-        <OrderMap order={orderData}/>
+        <OrderMap order={orderData} />
+
+        {/* delivery progress */}
+        <DeliveryProgress order={orderData} />
+
+        {/* delivery partner */}
+        <DeliveryPartner order={orderData} />
       </div>
     </Container>
   );

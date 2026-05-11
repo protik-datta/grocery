@@ -2224,7 +2224,7 @@ export const dummyDashboardOrdersData = [
       lng: -74.006,
     },
     liveLocation: {
-      lat: 40.7128,
+      lat: 40.7306,
       lng: -74.006,
       updatedAt: "2026-04-06T08:41:27.211Z",
     },
@@ -2262,7 +2262,7 @@ export const dummyDashboardOrdersData = [
     deliveryFee: 0,
     tax: 18.4,
     total: 248.4,
-    status: "Placed",
+    status: "Delivered",
     statusHistory: [
       {
         status: "Placed",

@@ -42,7 +42,7 @@ const Navbar = () => {
   return (
     <>
       {/* Main nav bar */}
-      <nav className="bg-white border-b border-[#E5E7EB] py-4 sticky top-0 z-30 ">
+      <nav className="bg-white border-b border-[#E5E7EB] py-4 sticky top-0 z-50">
         <Container className="flex items-center justify-between gap-3">
           {/* Logo */}
           <div className="w-24 md:w-30 shrink-0">

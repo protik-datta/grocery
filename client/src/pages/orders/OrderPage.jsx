@@ -2,8 +2,8 @@ import { useState } from "react";
 import Container from "../../shared/components/common/Container";
 import OrderCard from "./OrderCard";
 import { dummyDashboardOrdersData } from "../../assets/assets";
-import { Box } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { Package } from 'lucide-react';
 
 const OrderPage = () => {
   const [active, setActive] = useState(
@@ -72,7 +72,7 @@ const OrderPage = () => {
           <div className="flex flex-col gap-3 items-center justify-center py-20 w-full">
             {/* Icon Wrapper */}
             <div className="text-gray-300">
-              <Box size={64} strokeWidth={1} />
+              <Package size={64} strokeWidth={1} />
             </div>
 
             {/* Text Message */}
