@@ -73,7 +73,7 @@ const SearchPage = () => {
             No products found
           </h2>
 
-          <p className="text-[13px] sm:text-[14px] text-[#6B7280] mb-6 sm:mb-7 max-w-[260px] sm:max-w-xs leading-relaxed">
+          <p className="text-[13px] sm:text-[14px] text-[#6B7280] mb-6 sm:mb-7 max-w-65 sm:max-w-xs leading-relaxed">
             Try adjusting your filters or search terms to find what you're
             looking for
           </p>
