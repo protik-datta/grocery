@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
-import Container from "../../components/common/Container";
+import Container from "../../shared/components/common/Container";
 import useCartStore from "../../store/cartStore";
 
 const ProductInfoDetails = ({ product }) => {

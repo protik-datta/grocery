@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Container from "./Container";
-import { assets } from "../../assets/assets";
-import { Link, NavLink } from "react-router-dom";
+import { assets } from "../../../assets/assets";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
 import UserDropdown from "./UserDropdown";
-import useCartStore from "../../store/cartStore";
+import useCartStore from "../../../store/cartStore";
 
 const navItems = [
   { id: 1, label: "Home", path: "/" },
@@ -16,14 +16,28 @@ const Navbar = () => {
   const [user] = useState("Protik");
   const [userEmail] = useState("protik@gmail.com");
   const [mobileNav, setMobileNav] = useState(false);
+  const [search, setSearch] = useState("");
   const [mobileSearch, setMobileSearch] = useState(false);
   const { openCart, items } = useCartStore();
+
+  const navigate = useNavigate();
 
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   const navLinkClass = ({ isActive }) =>
     `text-[14px] font-normal leading-5 transition-colors duration-200
    ${isActive ? "text-[#F97316]" : "text-[#52525C] hover:text-black"}`;
+
+  // handle search
+  const handleSearch = (e) => {
+    e.preventDefault();
+
+    const trimmed = search.trim();
+    if (!trimmed) return;
+
+    navigate(`/search?q=${encodeURIComponent(trimmed)}`);
+    setMobileSearch(false);
+  };
 
   return (
     <>
@@ -50,14 +64,19 @@ const Navbar = () => {
             ))}
 
             {/* Desktop search */}
-            <div className="hidden md:flex flex-1 max-w-xs items-center bg-[#FFF7ED] border border-gray-100 rounded-full pl-4 pr-30 py-2 shadow-[0_0_0_1px_rgba(249,115,22,0.15)] focus-within:border-orange-200 transition">
+            <form
+              className="hidden md:flex flex-1 max-w-xs items-center bg-[#FFF7ED] border border-gray-100 rounded-full pl-4 pr-30 py-2 shadow-[0_0_0_1px_rgba(249,115,22,0.15)] focus-within:border-orange-200 transition"
+              onSubmit={handleSearch}
+            >
               <Search className="w-4 h-4 text-gray-400 shrink-0" />
               <input
                 type="text"
+                value={search}
                 placeholder="Search for groceries..."
+                onChange={(e) => setSearch(e.target.value)}
                 className="ml-2 w-full bg-transparent outline-none text-sm"
               />
-            </div>
+            </form>
           </div>
 
           {/* Right cluster */}
@@ -110,15 +129,20 @@ const Navbar = () => {
           className={`md:hidden overflow-hidden transition-all duration-300 ${mobileSearch ? "max-h-16 py-2" : "max-h-0"}`}
         >
           <Container>
-            <div className="flex items-center bg-[#FFF7ED] border border-gray-100 rounded-full px-4 py-2">
+            <form
+              onSubmit={handleSearch}
+              className="flex items-center bg-[#FFF7ED] border border-gray-100 rounded-full px-4 py-2"
+            >
               <Search size={16} className="text-gray-400 shrink-0" />
               <input
                 type="text"
                 placeholder="Search for groceries..."
+                value={search}
+                onChange={(e) => e.target.value}
                 className="ml-2 w-full bg-transparent outline-none text-sm"
                 autoFocus={mobileSearch}
               />
-            </div>
+            </form>
           </Container>
         </div>
       </nav>

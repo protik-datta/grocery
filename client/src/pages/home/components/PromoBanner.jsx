@@ -1,4 +1,4 @@
-import Container from "../../../components/common/Container";
+import Container from "../../../shared/components/common/Container";
 import { assets } from "../../../assets/assets";
 
 const PromoBanner = () => {

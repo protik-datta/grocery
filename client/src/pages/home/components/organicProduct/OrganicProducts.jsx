@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Container from "../../../../components/common/Container";
+import Container from "../../../../shared/components/common/Container";
 import { ArrowRight } from "lucide-react";
 import OrganicProductContainer from "./OrganicProductContainer";
 import { dummyProducts } from "../../../../assets/assets";

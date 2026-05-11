@@ -1,5 +1,5 @@
 import { assets } from "../../../assets/assets";
-import Container from "../../../components/common/Container";
+import Container from "../../../shared/components/common/Container";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 

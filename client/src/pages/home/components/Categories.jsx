@@ -1,4 +1,4 @@
-import Container from "../../../components/common/Container";
+import Container from "../../../shared/components/common/Container";
 import { categoriesData } from "../../../assets/assets";
 import { useNavigate } from "react-router-dom";
 

@@ -1,5 +1,5 @@
 import Container from "./Container";
-import { assets, footerData } from "../../assets/assets";
+import { assets, footerData } from "../../../assets/assets";
 import { Link } from "react-router-dom";
 
 const socialIcons = footerData.brand.socials;

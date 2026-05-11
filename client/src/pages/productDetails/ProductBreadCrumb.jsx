@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../../assets/assets";
-import Container from "../../components/common/Container";
+import Container from "../../shared/components/common/Container";
 import { ArrowLeft } from "lucide-react";
 
 const ProductBreadCrumb = ({ product }) => {

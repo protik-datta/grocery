@@ -1,4 +1,4 @@
-import Container from "../../components/common/Container";
+import Container from "../../shared/components/common/Container";
 import ProductReviewTop from "./ProductReviewTop";
 import Reviews from "./Reviews";
 
@@ -12,7 +12,7 @@ const ProductReview = ({ product }) => {
 
       <div className="bg-white/50 border border-gray-100 rounded-2xl">
         <ProductReviewTop product={product} />
-        <Reviews product={product}/>
+        <Reviews product={product} />
       </div>
     </Container>
   );
