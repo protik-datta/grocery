@@ -12,6 +12,7 @@ const {
 const Product = require("../model/product.model");
 const { invalidateCache } = require("../utils/cache");
 const redis = require("../config/redis.config");
+const Category = require("../model/category.model");
 
 const SORT_MAP = {
   newest: { createdAt: -1 },
@@ -82,7 +83,18 @@ const getAllProducts = asyncHandler(async (req, res) => {
     ];
   }
 
-  if (category) filter.category = category;
+  if (category) {
+    const categoryDoc = await Category.findOne({ slug: category }).select(
+      "_id",
+    );
+
+    if (!categoryDoc) {
+      throw new AppError(404, "Category not found");
+    }
+
+    filter.category = categoryDoc._id;
+  }
+
   if (minPrice !== undefined || maxPrice !== undefined) {
     filter.price = {};
     if (minPrice !== undefined) filter.price.$gte = minPrice;

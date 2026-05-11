@@ -6,6 +6,13 @@ const Chat = require("../model/chat.model");
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 
+const models = [
+  "gemini-2.5-flash",
+  "gemini-2.5-flash-lite",
+  "gemini-2.5-pro",
+  "gemini-1.5-flash",
+];
+
 const chat = asyncHandler(async (req, res) => {
   const { message, userId } = req.body;
 
@@ -88,11 +95,6 @@ AVAILABLE INVENTORY:
 ${productList}
 `;
 
-  const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
-    systemInstruction: systemInstruction,
-  });
-
   let userChat = await Chat.findOne({ userId });
   const history = userChat
     ? userChat.messages.map((m) => ({
@@ -101,13 +103,42 @@ ${productList}
       }))
     : [];
 
-  const chatSession = model.startChat({
-    history,
-    generationConfig: { maxOutputTokens: 1000 },
-  });
+  let reply = null;
+  let usedModel = null;
+  let lastError = null;
 
-  const result = await chatSession.sendMessage(message);
-  const reply = result.response.text();
+  for (const modelName of models) {
+    try {
+      const model = genAI.getGenerativeModel({
+        model: modelName,
+        systemInstruction: systemInstruction,
+      });
+
+      const chatSession = model.startChat({
+        history,
+        generationConfig: { maxOutputTokens: 1000 },
+      });
+
+      const result = await chatSession.sendMessage(message);
+      reply = result.response.text();
+      usedModel = modelName;
+
+      break;
+    } catch (error) {
+      console.log(`❌ ${modelName} failed`);
+      console.log(error.message);
+
+      lastError = error;
+    }
+  }
+
+  if (!reply) {
+    console.log(lastError);
+    throw new AppError(
+      500,
+      "AI service temporarily unavailable. Please try again later.",
+    );
+  }
 
   await Chat.findOneAndUpdate(
     { userId },
@@ -124,7 +155,9 @@ ${productList}
     { upsert: true, new: true },
   );
 
-  res.status(200).json({ status: "success", data: { reply } });
+  res
+    .status(200)
+    .json({ status: "success", data: { reply, model: usedModel } });
 });
 
 module.exports = { chat };
