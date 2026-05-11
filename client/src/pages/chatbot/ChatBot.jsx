@@ -78,7 +78,7 @@ const ChatBot = () => {
               <MessageCircle size={22} />
             </div>
             <span
-              className="text-[11px] font-medium tracking-wide text-white/80 group-hover:text-white transition-colors"
+              className="text-[14px] font-medium tracking-wide text-white/80 group-hover:text-white transition-colors"
               style={{
                 writingMode: "vertical-rl",
                 transform: "rotate(180deg)",

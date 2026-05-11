@@ -45,7 +45,7 @@ const OrderPage = () => {
           {navLink.map((item) => (
             <button
               key={item.id}
-              className={`px-4 py-2 rounded-xl ${active === item.label ? "bg-[#1B3022] text-white" : "bg-white text-[#6B7280]"} text-center text-[14px] font-medium leading-5 cursor-pointer`}
+              className={`px-4 py-2 rounded-xl ${active === item.label ? "bg-[#1B3022] text-white" : "bg-white text-[#6B7280]"} text-center text-[14px] font-normal leading-5 cursor-pointer`}
               onClick={() => {
                 setActive(item.label);
                 localStorage.setItem("activeLink", item.label);
@@ -65,7 +65,7 @@ const OrderPage = () => {
           .map((item) => (
             <OrderCard key={item._id} order={item} />
           ))}
-        {/* Jodi kono order na thake tar jonno ekti check */}
+        {/* Jodi kono order na thake */}
         {order.filter((item) =>
           active === "All Orders" ? true : item.status === active,
         ).length === 0 && (

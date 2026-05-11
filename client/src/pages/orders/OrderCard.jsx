@@ -1,5 +1,6 @@
-import { ChevronRight } from 'lucide-react';
+import { ChevronRight } from "lucide-react";
 import { assets, statusColors } from "../../assets/assets";
+import { useNavigate } from "react-router-dom";
 
 const OrderCard = ({ order }) => {
   const orderDate = new Date(order.createdAt).toLocaleDateString("en-US", {
@@ -8,8 +9,10 @@ const OrderCard = ({ order }) => {
     year: "numeric",
   });
 
+  const navigate = useNavigate();
+
   return (
-    <div className="w-full md:w-2/3 flex items-stretch justify-between bg-white p-5 rounded-2xl cursor-pointer hover:shadow transition-all border border-gray-100">
+    <div className="w-full md:w-2/3 flex items-stretch justify-between bg-white p-5 rounded-2xl cursor-pointer hover:shadow transition-all border border-gray-100" onClick={()=> navigate(`/orders/${order._id}`)}>
       {/* Left side */}
       <div className="flex flex-col items-start">
         <h3 className="text-[#1B3022] text-[14px] font-medium leading-5">
