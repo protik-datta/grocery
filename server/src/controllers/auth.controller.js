@@ -11,7 +11,10 @@ const register = asyncHandler(async (req, res) => {
 
   const existingUser = await User.findOne({ email });
   if (existingUser) {
-    throw new AppError("User already exists", 400);
+    return res.status(400).json({
+      success: false,
+      message: "User already exists",
+    });
   }
 
   const hashedPassword = await bcrypt.hash(password, 12);
@@ -34,12 +37,18 @@ const login = asyncHandler(async (req, res) => {
 
   const user = await User.findOne({ email }).select("+password");
   if (!user) {
-    throw new AppError("Invalid email or password", 401);
+    return res.status(401).json({
+      success: false,
+      message: "Invalid email or password",
+    });
   }
 
   const isMatch = await bcrypt.compare(password, user.password);
   if (!isMatch) {
-    throw new AppError("Invalid email or password", 401);
+    return res.status(401).json({
+      success: false,
+      message: "Invalid email or password",
+    });
   }
 
   const token = generateToken(user._id);
@@ -69,7 +78,10 @@ const getMe = asyncHandler(async (req, res) => {
   const user = await User.findById(req.user.id).lean();
 
   if (!user) {
-    throw new AppError("User not found", 404);
+    return res.status(404).json({
+      success: false,
+      message: "User not found",
+    });
   }
 
   await redis.set(redisKey, JSON.stringify(user), "EX", 60 * 60);
