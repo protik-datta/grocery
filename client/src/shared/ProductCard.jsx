@@ -51,14 +51,14 @@ const ProductCard = ({ product }) => {
           <div className="flex flex-col">
             <div className="flex items-baseline gap-x-1">
               <h4 className="text-[#1B3022] font-outfit text-xs sm:text-sm font-semibold leading-4">
-                ${product.price}
+                ৳{product.price}
               </h4>
               <span className="text-[10px] font-normal text-gray-500 font-outfit">
                 /{product.unit}
               </span>
             </div>
             <del className="text-gray-400 font-outfit text-[11px] font-normal leading-3">
-              ${product.originalPrice}
+              ৳{product.originalPrice}
             </del>
           </div>
 

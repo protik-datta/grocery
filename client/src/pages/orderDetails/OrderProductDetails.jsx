@@ -22,7 +22,7 @@ const OrderProductDetails = ({ order }) => {
               </span>
             </div>
             <span className="text-[#1B3022] text-[14px] font-semibold leading-5">
-              ${item.price.toFixed(2)}
+              ৳{item.price.toFixed(2)}
             </span>
           </div>
         ))}
@@ -35,7 +35,7 @@ const OrderProductDetails = ({ order }) => {
             Subtotal
           </span>
           <span className="text-[#1B3022] text-[14px] font-normal leading-6">
-            ${order?.subtotal.toFixed(2)}
+            ৳{order?.subtotal.toFixed(2)}
           </span>
         </div>
         {/* delivery fee */}
@@ -44,7 +44,7 @@ const OrderProductDetails = ({ order }) => {
             Delivery
           </span>
           <span className="text-[#1B3022] text-[14px] font-normal leading-6">
-            {order?.deliveryFee === 0 ? "Free" : order?.deliveryFee.toFixed(2)}
+            {order?.deliveryFee === 0 ? "Free" : `৳${order?.deliveryFee.toFixed(2)}`}
           </span>
         </div>
         {/* tax */}
@@ -53,7 +53,7 @@ const OrderProductDetails = ({ order }) => {
             Tax
           </span>
           <span className="text-[#1B3022] text-[14px] font-normal leading-6">
-            ${order?.tax.toFixed(2)}
+            ৳{order?.tax.toFixed(2)}
           </span>
         </div>
       </div>
@@ -63,7 +63,7 @@ const OrderProductDetails = ({ order }) => {
           Total
         </span>
         <span className="text-[#1B3022] text-[16px] font-semibold leading-5">
-          ${order?.total.toFixed(2)}
+          ৳{order?.total.toFixed(2)}
         </span>
       </div>
     </div>

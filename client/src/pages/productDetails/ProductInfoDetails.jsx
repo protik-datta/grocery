@@ -61,10 +61,10 @@ const ProductInfoDetails = ({ product }) => {
             {/* price */}
             <div className="flex items-baseline gap-x-2 mt-5">
               <h2 className="text-[#1B3022] text-[36px] font-semibold leading-10">
-                ${(product.price * quantity).toFixed(2)}
+                ৳{(product.price * quantity).toFixed(2)}
               </h2>
               <span className="text-[#6B7280] line-through text-[18px] font-normal leading-7">
-                ${(product.originalPrice * quantity).toFixed(2)}
+                ৳{(product.originalPrice * quantity).toFixed(2)}
               </span>
               <span className="text-[#6B7280] text-[14px] font-normal leading-5">
                 /{product.unit}

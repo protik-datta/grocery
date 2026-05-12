@@ -72,7 +72,7 @@ const Cart = () => {
             items.map(({ product, quantity }) => (
               <div
                 key={product._id}
-                className="flex items-center gap-4 p-4 rounded-2xl bg-gray-50 hover:bg-gray-100/80 transition-colors"
+                className="flex items-center gap-4 p-4 rounded-2xl bg-[#faf7f2]/80 transition-colors"
               >
                 {/* Image */}
                 <div className="w-16 h-16 flex items-center justify-center shrink-0 overflow-hidden">
@@ -85,11 +85,11 @@ const Cart = () => {
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <p className="text-[#1B3022] text-sm font-semibold truncate">
+                  <p className="text-[#1B3022] text-sm font-medium truncate">
                     {product.name}
                   </p>
-                  <p className="text-gray-400 text-xs mt-0.5">
-                    ${product.price} / {product.unit}
+                  <p className="text-[#6B7280] text-xs mt-0.5">
+                    ৳{product.price} / {product.unit}
                   </p>
 
                   {/* Quantity controls */}
@@ -115,7 +115,7 @@ const Cart = () => {
                 {/* Price + Delete */}
                 <div className="flex flex-col items-end gap-3 shrink-0">
                   <p className="text-[#1B3022] text-sm font-bold">
-                    ${(product.price * quantity).toFixed(2)}
+                    ৳{(product.price * quantity).toFixed(2)}
                   </p>
                   <button
                     onClick={() => removeItem(product._id)}
@@ -138,7 +138,7 @@ const Cart = () => {
             <div className="flex justify-between text-sm text-gray-500">
               <span>Subtotal</span>
               <span className="text-[#1B3022] font-medium">
-                ${subtotal.toFixed(2)}
+                ৳{subtotal.toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between text-sm text-gray-500">
@@ -147,7 +147,7 @@ const Cart = () => {
             </div>
             <div className="flex justify-between text-base font-bold text-[#1B3022] pt-2 border-t border-gray-100">
               <span>Total</span>
-              <span>${subtotal.toFixed(2)}</span>
+              <span>৳{subtotal.toFixed(2)}</span>
             </div>
             <button className="w-full bg-[#F97316] transition-all text-white font-semibold text-[15px] py-4 rounded-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer">
               Proceed to Checkout
