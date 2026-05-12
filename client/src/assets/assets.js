@@ -29,6 +29,7 @@ import flash from "./flash.svg";
 import blank_star from "./blank_star.svg";
 import thumbs_up from "./thumb_up.svg";
 import calender from "./calender.svg";
+import location from './location.svg';
 
 export const assets = {
   delivery_truck,
@@ -51,6 +52,7 @@ export const assets = {
   blank_star,
   thumbs_up,
   calender,
+  location
 };
 
 export const categoriesData = [

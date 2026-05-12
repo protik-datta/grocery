@@ -32,7 +32,7 @@ const DeliveryProgress = ({ order }) => {
 
   return (
     <div className='py-10'>
-      <div className="bg-white border border-gray-100 rounded-2xl p-8 max-w-[50%] w-full">
+      <div className="bg-white border border-gray-100 rounded-2xl p-8 w-full">
         <h3 className="text-[18px] font-semibold text-[#1B3022] mb-6">
           Delivery progress
         </h3>

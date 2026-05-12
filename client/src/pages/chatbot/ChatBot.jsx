@@ -27,7 +27,7 @@ const ChatBot = () => {
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]); // Scroll when typing starts too
+  }, [messages, isTyping]);
 
   const handleSend = () => {
     const trimmed = inputValue.trim();
@@ -66,7 +66,11 @@ const ChatBot = () => {
             initial={{ x: 60, opacity: 0 }}
             animate={{ x: 0, opacity: 1 }}
             exit={{ x: 60, opacity: 0 }}
-            transition={{ type: "spring", damping: 30, stiffness: 150 }}
+            transition={{
+              type: "tween",
+              ease: [0.4, 0, 0.2, 1],
+              duration: 0.38,
+            }}
             onClick={() => setIsOpen(true)}
             className="fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-[#1B3022] text-white flex flex-col items-center gap-2 py-4 px-3 rounded-l-lg shadow-xl hover:bg-[#243d2c] transition-colors group"
           >
@@ -97,8 +101,9 @@ const ChatBot = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
               onClick={() => setIsOpen(false)}
-              className="fixed inset-0 bg-black/30 backdrop-blur-[2px] z-40"
+              className="fixed inset-0 bg-black/30 backdrop-blur-sm z-40"
             />
 
             <motion.div
@@ -160,6 +165,13 @@ const ChatBot = () => {
                   ) : (
                     <div
                       key={msg.id}
+                      initial={{ opacity: 0, scale: 0.88, y: 8 }}
+                      animate={{ opacity: 1, scale: 1, y: 0 }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 22,
+                      }}
                       className="flex items-end justify-end gap-2"
                     >
                       <div className="bg-[#1B3022] text-white p-3 rounded-2xl rounded-br-none shadow-sm max-w-[82%]">

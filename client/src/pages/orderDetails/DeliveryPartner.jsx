@@ -2,7 +2,7 @@ import { Phone } from "lucide-react";
 
 const DeliveryPartner = ({ order }) => {
   return (
-    <div className="pb-10 w-[50%]">
+    <div className="pb-10 w-full">
       <div className="bg-white rounded-2xl p-5 flex items-center justify-between">
         {/* left */}
         <div className="flex items-start gap-2">

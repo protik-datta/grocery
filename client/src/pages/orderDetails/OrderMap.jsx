@@ -17,8 +17,8 @@ const OrderMap = ({ order }) => {
 
   return (
     <div
-      className="rounded-2xl overflow-hidden border border-gray-100"
-      style={{ height: "300px", width: "50%" }}
+      className="rounded-2xl overflow-hidden border border-gray-100 w-full"
+      style={{ height: "300px" }}
     >
       <MapContainer
         center={shipping}
