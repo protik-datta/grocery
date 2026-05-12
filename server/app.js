@@ -77,6 +77,8 @@ const categoryRoutes = require("./src/routes/category.routes");
 app.use("/api/categories", categoryRoutes);
 const chatbotRoutes = require("./src/routes/chatbot.routes");
 app.use("/api/chat", chatbotRoutes);
+const authRoutes = require("./src/routes/auth.routes");
+app.use("/api/auth", authRoutes);
 // ------- routes -------- //
 
 module.exports = app;
