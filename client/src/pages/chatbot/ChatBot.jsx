@@ -9,29 +9,45 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-
-const INITIAL_MESSAGES = [
-  {
-    id: 1,
-    text: "Hi Protik! Welcome back. Ajke ki lagbe apnar? Fresh fruits naki vegetables? 🌿",
-    sender: "bot",
-  },
-];
+import { useAuth } from "../../store/useAuthStore";
+import { useChatbot } from "./chatbot.hook";
 
 const ChatBot = () => {
+  const { user } = useAuth();
+  const { mutate: sendMessage, isPending } = useChatbot();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState(INITIAL_MESSAGES);
+  const [messages, setMessages] = useState(() => {
+    const saved = localStorage.getItem("mira_chat_history");
+    return saved ? JSON.parse(saved) : [];
+  });
   const [inputValue, setInputValue] = useState("");
-  const [isTyping, setIsTyping] = useState(false);
   const messagesEndRef = useRef(null);
 
   useEffect(() => {
+    if (messages.length === 0 && user) {
+      const userName = user?.name ? user.name.split(" ")[0] : "Customer";
+      const initialMsg = {
+        id: "initial",
+        text: `Hi ${userName}! Welcome back. Ajke ki lagbe apnar? Fresh fruits naki vegetables? 🌿`,
+        sender: "bot",
+      };
+      setMessages([initialMsg]);
+    }
+  }, [user, messages.length]);
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      localStorage.setItem("mira_chat_history", JSON.stringify(messages));
+    }
+  }, [messages]);
+
+  useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  }, [messages, isTyping]);
+  }, [messages, isPending]);
 
   const handleSend = () => {
     const trimmed = inputValue.trim();
-    if (!trimmed) return;
+    if (!trimmed || isPending) return;
 
     const userMsg = {
       id: Date.now(),
@@ -41,17 +57,17 @@ const ChatBot = () => {
     setMessages((prev) => [...prev, userMsg]);
     setInputValue("");
 
-    setIsTyping(true);
-
-    setTimeout(() => {
-      const botMsg = {
-        id: Date.now() + 1,
-        text: "Apnar message পেয়েছি! আমরা শীঘ্রই সাহায্য করব। 🙏",
-        sender: "bot",
-      };
-      setMessages((prev) => [...prev, botMsg]);
-      setIsTyping(false);
-    }, 500);
+    sendMessage(trimmed, {
+      onSuccess: (data) => {
+        const botMsg = {
+          id: Date.now() + 1,
+          text:
+            data.reply || "Apnar message পেয়েছি! আমরা শীঘ্রই সাহায্য করব। 🙏",
+          sender: "bot",
+        };
+        setMessages((prev) => [...prev, botMsg]);
+      },
+    });
   };
 
   const handleKeyDown = (e) => {
@@ -72,7 +88,7 @@ const ChatBot = () => {
               duration: 0.38,
             }}
             onClick={() => setIsOpen(true)}
-            className="fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-[#1B3022] text-white flex flex-col items-center gap-2 py-4 px-3 rounded-l-lg shadow-xl hover:bg-[#243d2c] transition-colors group"
+            className={`fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-[#1B3022] text-white ${user ? "flex" : "hidden"} flex-col items-center gap-2 py-4 px-3 rounded-l-lg shadow-xl hover:bg-[#243d2c] transition-colors group`}
           >
             <div className="relative">
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
@@ -128,7 +144,7 @@ const ChatBot = () => {
                   </div>
                   <div>
                     <h3 className="font-semibold text-white text-sm leading-tight">
-                      Grocery Support
+                      Mira
                     </h3>
                     <p className="text-[11px] text-green-400 font-medium">
                       Active Now
@@ -185,7 +201,7 @@ const ChatBot = () => {
                 )}
 
                 {/* Typing Indicator */}
-                {isTyping && (
+                {isPending && (
                   <div className="flex items-end gap-2">
                     <div className="w-8 h-8 rounded-full bg-[#1B3022] flex items-center justify-center text-white shrink-0">
                       <Bot size={15} />

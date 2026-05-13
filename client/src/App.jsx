@@ -8,13 +8,19 @@ import ProductDetails from "./pages/productDetails/ProductDetails";
 import SearchPage from "./pages/search/SearchPage";
 import OrderPage from "./pages/orders/OrderPage";
 import OrderDetails from "./pages/orderDetails/OrderDetails";
-import PaymentSuccess from "./pages/paymentSuccess/PaymentSuccess";
-import Login from "./pages/auth/Login";
-import Register from './pages/auth/Register';
+import PaymentSuccess from "./pages/payment/PaymentSuccess";
+import Login from "./pages/auth/Login/Login";
+import Register from "./pages/auth/Register/Register";
+import { Toaster } from "react-hot-toast";
+import PaymentFailed from "./pages/payment/PaymentFailed";
+import NotFound from "./shared/components/common/NotFound";
+import ProtectedRoute from "./shared/components/routes/ProtectedRoute";
+import AuthRoute from "./shared/components/routes/AuthRoute";
 
 const App = () => {
   return (
     <BrowserRouter>
+      <Toaster position="top-right" />
       <Cart />
       <Routes>
         {/* public routes */}
@@ -25,14 +31,23 @@ const App = () => {
             path="/products/:category/:slug"
             element={<ProductDetails />}
           />
-          <Route path="/deals" element={<DealsPage />} />
           <Route path="/search" element={<SearchPage />} />
-          <Route path="/orders" element={<OrderPage />} />
-          <Route path="/orders/:id" element={<OrderDetails />} />
+          <Route path="/deals" element={<DealsPage />} />
+          {/* protected route */}
+          <Route element={<ProtectedRoute />}>
+            <Route path="/orders" element={<OrderPage />} />
+            <Route path="/orders/:id" element={<OrderDetails />} />
+            <Route path="/payment/success" element={<PaymentSuccess />} />
+            <Route path="/payment/fail" element={<PaymentFailed />} />
+          </Route>
         </Route>
-        <Route path="/payment/success" element={<PaymentSuccess />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {/* auth route */}
+        <Route element={<AuthRoute />}>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+        </Route>
+        {/* 404 not found */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
   );

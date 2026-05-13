@@ -1,5 +1,4 @@
 import { useState, useRef, useEffect } from "react";
-import { Link } from "react-router-dom";
 import {
   ChevronDown,
   ShoppingBag,
@@ -8,6 +7,7 @@ import {
   LogOut,
   X,
 } from "lucide-react";
+import { useLogout } from "../../../service/logout.api";
 
 const menuItems = [
   { icon: ShoppingBag, label: "My Orders", path: "/orders" },
@@ -51,6 +51,15 @@ export default function UserDropdown({ user }) {
 
   const close = () => setOpen(false);
 
+  const { mutate: logout } = useLogout();
+  const handleLogout = () => {
+    logout(null, {
+      onSuccess: () => {
+        setOpen(false);
+      },
+    });
+  };
+
   return (
     <div className="relative" ref={ref}>
       {/* Trigger */}
@@ -59,7 +68,7 @@ export default function UserDropdown({ user }) {
         className="flex items-center gap-1.5 cursor-pointer"
       >
         <div className="w-7 h-7 bg-[#032E15] flex items-center justify-center text-white rounded-full text-[13px] font-medium">
-          {user.name.charAt(0).toUpperCase()}
+          {user?.name?.charAt(0).toUpperCase()}
         </div>
         <ChevronDown
           size={15}
@@ -79,7 +88,13 @@ export default function UserDropdown({ user }) {
       >
         <UserInfo user={user} />
         <ItemList items={menuItems} onClose={close} />
-        <ItemList items={dangerItems} onClose={close} danger divider />
+        <ItemList
+          items={dangerItems}
+          onClose={close}
+          danger
+          divider
+          onLogout={handleLogout}
+        />
       </div>
 
       {/* Mobile slide-in drawer (from right) */}
@@ -106,7 +121,13 @@ export default function UserDropdown({ user }) {
         {/* drawer nav */}
         <div className="flex-1 overflow-y-auto py-2">
           <ItemList items={menuItems} onClose={close} mobile />
-          <ItemList items={dangerItems} onClose={close} danger divider />
+          <ItemList
+            items={dangerItems}
+            onClose={close}
+            danger
+            divider
+            onLogout={handleLogout}
+          />
         </div>
       </div>
     </div>
@@ -124,23 +145,28 @@ function UserInfo({ user }) {
   );
 }
 
-function ItemList({ items, onClose, mobile, danger, divider }) {
+function ItemList({ items, onClose, mobile, danger, divider, onLogout }) {
   return (
     <div className={`${divider ? "border-t border-gray-100" : ""} py-1.5`}>
-      {items.map(({ icon: Icon, label, path }) => (
-        <Link
-          key={label}
-          to={path}
-          onClick={onClose}
-          className={`flex items-center gap-3 px-4 transition-colors ${mobile ? "py-3.5 text-[15px]" : "py-2.5 text-sm"} ${danger ? "text-red-500 hover:bg-red-50" : "text-gray-700 hover:bg-gray-50"}`}
-        >
-          <Icon
-            size={mobile ? 19 : 17}
-            className={danger ? "text-red-400" : "text-gray-400"}
-          />
-          {label}
-        </Link>
-      ))}
+      {items.map(({ icon: Icon, label, path }) => {
+        const isLogout = label === "Logout";
+        return (
+          <button
+            key={label}
+            onClick={() => {
+              onClose();
+              if (isLogout) onLogout();
+            }}
+            className={`flex items-center gap-3 px-4 w-full transition-colors ${mobile ? "py-3.5 text-[15px]" : "py-2.5 text-sm"} ${danger ? "text-red-500 hover:bg-red-50" : "text-gray-700 hover:bg-gray-50"}`}
+          >
+            <Icon
+              size={mobile ? 19 : 17}
+              className={danger ? "text-red-400" : "text-gray-400"}
+            />
+            {label}
+          </button>
+        );
+      })}
     </div>
   );
 }
