@@ -1,6 +1,10 @@
 const asyncHandler = require("../utils/asyncHandler");
 const User = require("../model/user.model");
-const { generateToken, setAuthCookie, clearAuthCookie } = require("../helpers/generateToken");
+const {
+  generateToken,
+  setAuthCookie,
+  clearAuthCookie,
+} = require("../helpers/generateToken");
 const AppError = require("../utils/AppError");
 const bcrypt = require("bcryptjs");
 const redis = require("../config/redis.config");
@@ -56,7 +60,6 @@ const login = asyncHandler(async (req, res) => {
 
   res.status(200).json({
     success: true,
-    token,
     data: user,
   });
 });
@@ -93,6 +96,53 @@ const getMe = asyncHandler(async (req, res) => {
   });
 });
 
+// get all user
+const getAllUsers = asyncHandler(async (req, res) => {
+  const cacheKey = "admin:users:all";
+  const cached = await redis.get(cacheKey);
+
+  if (cached) {
+    return res.status(200).json({
+      status: "success",
+      source: "cache",
+      data: JSON.parse(cached),
+    });
+  }
+
+  const users = await User.find().lean();
+
+  const response = {
+    status: "success",
+    count: users.length,
+    data: users,
+  };
+
+  await redis.setex(cacheKey, 300, JSON.stringify(response));
+  res.status(200).json(response);
+});
+
+// delete users
+const deleteUser = asyncHandler(async (req, res) => {
+  const user = await User.findByIdAndDelete(req.params.id);
+
+  if(!user){
+    return res.status(404).json({
+      status: false,
+      message: "User not found",
+    });
+  }
+
+  await Promise.all([
+    redis.del(`user:${user._id}`),
+    redis.del("admin:users:all"),
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    message: "User deleted successfully",
+  });
+});
+
 // logout
 const logout = asyncHandler(async (req, res) => {
   clearAuthCookie(res);
@@ -107,4 +157,6 @@ module.exports = {
   login,
   getMe,
   logout,
+  getAllUsers,
+  deleteUser
 };

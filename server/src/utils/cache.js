@@ -22,4 +22,11 @@ const invalidateCache = async (category) => {
   }
 };
 
-module.exports = { invalidateCache, CACHE_TTL };
+const clearCacheByPattern = async (pattern) => {
+  const keys = await redis.keys(pattern);
+  if (keys.length > 0) {
+    await redis.del(keys);
+  }
+};
+
+module.exports = { invalidateCache, CACHE_TTL, clearCacheByPattern };

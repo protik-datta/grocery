@@ -13,7 +13,18 @@ const protect = async (req, res, next) => {
     return;
   }
 
-  const decoded = jwt.verify(token, process.env.JWT_SECRET);
+  let decoded;
+
+  try {
+    decoded = jwt.verify(token, process.env.JWT_SECRET);
+  } catch (err) {
+    res.status(401).json({
+      success: false,
+      message: "Not authorized, token failed"
+    });
+    return;
+  }
+
   const user = await User.findById(decoded.id);
 
   if(!user) {

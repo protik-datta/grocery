@@ -16,12 +16,14 @@ const chatRateLimit = async (req, res, next) => {
   if (requests > LIMIT) {
     const ttl = await redis.ttl(key);
     const hoursLeft = Math.ceil(ttl / 3600);
-
-    throw new AppError(
-      429,
-      `You’ve reached the ${LIMIT} message limit. Please try again in ${hoursLeft} hour(s).`,
+    return next(
+      new AppError(
+        429,
+        `You've reached the ${LIMIT} message limit. Please try again in ${hoursLeft} hour(s).`,
+      ),
     );
   }
+  
   next();
 };
 

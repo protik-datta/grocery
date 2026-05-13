@@ -11,6 +11,7 @@ const {
   deleteFromCloudinary,
 } = require("../utils/uploadToCloudinary");
 const Product = require("../model/product.model");
+const { clearCacheByPattern } = require('../utils/cache');
 
 const CACHE_KEY = "categories:all";
 const CACHE_TTL = 60 * 60;
@@ -132,6 +133,7 @@ const updateCategory = asyncHandler(async (req, res) => {
     redis.del(CACHE_KEY),
     redis.del(`category:${oldSlug}`),
     redis.del(`category:${updated.slug}`),
+    clearCacheByPattern("products:*"),
   ]);
 
   res.status(200).json({ status: "success", data: updated });

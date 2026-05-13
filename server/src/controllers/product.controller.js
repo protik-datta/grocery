@@ -159,46 +159,43 @@ const getProductBySlug = asyncHandler(async (req, res) => {
 // update product /:id
 const updateProduct = asyncHandler(async (req, res) => {
   const parsed = updateProductSchema.safeParse(req.body);
-
-  if (!parsed.success) {
-    throw new AppError(400, parsed.error.errors[0].message);
-  }
+  if (!parsed.success) throw new AppError(400, parsed.error.errors[0].message);
 
   const product = await Product.findById(req.params.id);
   if (!product) throw new AppError(404, "Product not found");
 
+  const oldSlug = product.slug;
+  const oldCategory = product.category;
+
   if (req.file) {
-    if (product.imagePublicId) {
-      await deleteFromCloudinary(product.imagePublicId);
-    }
+    if (product.imagePublicId) await deleteFromCloudinary(product.imagePublicId);
     const result = await uploadToCloudinary(req.file.buffer);
     parsed.data.imageUrl = result.secure_url;
     parsed.data.imagePublicId = result.public_id;
   }
 
-  const oldCategory = product.category;
-
   const updated = await Product.findByIdAndUpdate(
     req.params.id,
-    {
-      $set: parsed.data,
-    },
-    { new: true, runValidators: true },
+    { $set: parsed.data },
+    { new: true, runValidators: true }
   ).lean();
+
+  const keysToDelete = [
+    `product:slug:${oldSlug}`,
+    `product:slug:${updated.slug}`,
+    `product:${req.params.id}`
+  ];
+
+  const filterKeys = await redis.keys("products:*");
 
   await Promise.all([
     invalidateCache(oldCategory),
-    parsed.data.category && parsed.data.category !== oldCategory
-      ? invalidateCache(parsed.data.category)
-      : Promise.resolve(),
-    redis.del(`product:${req.params.id}`),
+    parsed.data.category && parsed.data.category !== oldCategory ? invalidateCache(parsed.data.category) : null,
+    ...keysToDelete.map(key => redis.del(key)),
+    filterKeys.length > 0 ? redis.del(filterKeys) : null
   ]);
 
-  res.status(200).json({
-    status: "success",
-    data: updated,
-    message: "Product Updated Successfully",
-  });
+  res.status(200).json({ status: "success", data: updated });
 });
 
 // delete product /:id

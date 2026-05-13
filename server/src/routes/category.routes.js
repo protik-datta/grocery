@@ -8,11 +8,13 @@ const {
   updateCategory,
   deleteCategory,
 } = require("../controllers/category.controller");
+const { isAdmin } = require('../middlewares/admin.middleware');
+const { protect } = require('../middlewares/protect.middleware');
 
-router.post("/", upload.single("image"), createCategory);
+router.post("/", upload.single("image"), protect, isAdmin, createCategory);
 router.get("/", getAllCategories);
 router.get("/:slug", getCategoryBySlug);
-router.patch("/:id", upload.single("image"), updateCategory);
-router.delete("/:id", deleteCategory);
+router.patch("/:id", protect, isAdmin, upload.single("image"), updateCategory);
+router.delete("/:id", protect, isAdmin, deleteCategory);
 
 module.exports = router;

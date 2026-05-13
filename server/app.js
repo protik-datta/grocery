@@ -81,6 +81,8 @@ const authRoutes = require("./src/routes/auth.routes");
 app.use("/api/auth", authRoutes);
 const orderRoutes = require("./src/routes/order.routes");
 app.use("/api/orders", orderRoutes);
+const paymentRoutes = require("./src/routes/payment.routes");
+app.use("/api/v1/payment", paymentRoutes);
 // ------- routes -------- //
 
 module.exports = app;

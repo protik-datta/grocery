@@ -19,24 +19,43 @@ const createOrder = asyncHandler(async (req, res) => {
 
   let calculatedSubtotal = 0;
   const orderItems = [];
-  const bulkStockOps = [];
+  const reservedItems = [];
 
   for (const item of items) {
-    const product = await Product.findById(item.product);
+    const product = await Product.findOneAndUpdate(
+      { _id: item.product, stock: { $gte: item.quantity } },
+      { $inc: { stock: -item.quantity } },
+      { new: false },
+    );
 
     if (!product) {
-      return res.status(404).json({
+      const exists = await Product.findById(item.product).select("name stock");
+
+      if (reservedItems.length > 0) {
+        await Product.bulkWrite(
+          reservedItems.map(({ productId, quantity }) => ({
+            updateOne: {
+              filter: { _id: productId },
+              update: { $inc: { stock: quantity } },
+            },
+          })),
+        );
+      }
+
+      if (!exists) {
+        return res.status(404).json({
+          status: false,
+          message: `Product with id ${item.product} not found`,
+        });
+      }
+
+      return res.status(400).json({
         status: false,
-        message: `Product with id ${item.product} not found`,
+        message: `Only ${exists.stock} unit(s) of "${exists.name}" available`,
       });
     }
 
-    if (product.stock < item.quantity) {
-      return res.status(400).json({
-        status: false,
-        message: `Only ${product.stock} units of ${product.name} available`,
-      });
-    }
+    reservedItems.push({ productId: product._id, quantity: item.quantity });
 
     orderItems.push({
       product: product._id,
@@ -45,13 +64,6 @@ const createOrder = asyncHandler(async (req, res) => {
       unit: product.unit,
       price: product.price,
       quantity: item.quantity,
-    });
-
-    bulkStockOps.push({
-      updateOne: {
-        filter: { _id: product._id },
-        update: { $inc: { stock: -item.quantity } },
-      },
     });
 
     calculatedSubtotal += product.price * item.quantity;
@@ -66,6 +78,14 @@ const createOrder = asyncHandler(async (req, res) => {
       zip: shippingAddress.zip,
     });
   } catch (error) {
+    await Product.bulkWrite(
+      reservedItems.map(({ productId, quantity }) => ({
+        updateOne: {
+          filter: { _id: productId },
+          update: { $inc: { stock: quantity } },
+        },
+      })),
+    );
     return res.status(400).json({
       success: false,
       message: "Could not fetch coordinates for the provided address.",
@@ -90,8 +110,25 @@ const createOrder = asyncHandler(async (req, res) => {
     discount,
   });
 
-  await Product.bulkWrite(bulkStockOps);
-  const saveOrder = await newOrder.save();
+  let saveOrder;
+  try {
+    saveOrder = await newOrder.save();
+  } catch (err) {
+    await Product.bulkWrite(
+      reservedItems.map(({ productId, quantity }) => ({
+        updateOne: {
+          filter: { _id: productId },
+          update: { $inc: { stock: quantity } },
+        },
+      })),
+    );
+    throw err;
+  }
+
+  await Promise.all([
+    redis.del(`orders:user:${req.user._id}`),
+    redis.del("admin:orders:all"),
+  ]);
 
   res.status(201).json({
     status: "success",
@@ -196,6 +233,71 @@ const getAllOrders = asyncHandler(async (req, res) => {
   res.status(200).json(response);
 });
 
+const createDeliveryPartner = asyncHandler(async (req, res) => {
+  const { name, email, phone, vehicleType } = req.body;
+
+  const exist = await DeliveryPartner.findOne({ $or: [{ email }, { phone }] });
+  if (exist) {
+    return res.status(400).json({
+      status: false,
+      message: "Delivery partner with this email or phone already exists",
+    });
+  }
+
+  const partner = await DeliveryPartner.create({
+    name,
+    email,
+    phone,
+    vehicleType,
+  });
+
+  res.status(201).json({
+    status: "success",
+    message: "Delivery partner added successfully",
+    data: partner,
+  });
+});
+
+// assign delivery partner to order
+const assginDeliveryPartner = asyncHandler(async (req, res) => {
+  const {orderId, partnerId} = req.body;
+
+  const order = await Order.findById(orderId);
+  if (!order) {
+    return res.status(404).json({
+      status: false,
+      message: "Order not found",
+    });
+  }
+
+  const partner = await DeliveryPartner.findById(partnerId);
+  if (!partner) {
+    return res.status(404).json({
+      status: false,
+      message: "Delivery partner not found",
+    });
+  }
+
+  order.deliveryPartner = partner._id;
+  await order.pushStatus("Out for Delivery");
+
+  const cacheKey = `order:${order._id}`;
+  const userOrdersCacheKey = `orders:user:${order.user}`;
+  const adminOrdersCacheKey = "admin:orders:all";
+
+  await Promise.all([
+    redis.del(cacheKey),
+    redis.del(userOrdersCacheKey),
+    redis.del(adminOrdersCacheKey),
+  ]);
+
+  res.status(200).json({
+    status: "success",
+    message: "Delivery partner assigned and order status updated",
+    data: order,
+  });
+});
+
 // update order /:id
 const updateOrder = asyncHandler(async (req, res) => {
   const { status } = req.body;
@@ -216,7 +318,7 @@ const updateOrder = asyncHandler(async (req, res) => {
 
   await order.save();
 
-  const cacheKey = `user:${order.user}:orders`;
+  const cacheKey = `orders:user:${order.user}`;
   const adminCacheKey = "admin:orders:all";
   const orderCacheKey = `order:${order._id}`;
 
@@ -265,5 +367,7 @@ module.exports = {
   getAllOrders,
   getOrderById,
   updateOrder,
-  deleteOrder
+  assginDeliveryPartner,
+  deleteOrder,
+  createDeliveryPartner
 };

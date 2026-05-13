@@ -123,6 +123,11 @@ const orderSchema = new mongoose.Schema(
       enum: PAYMENT_METHODS,
       required: true,
     },
+    paymentStatus: {
+      type: String,
+      enum: ["Pending", "Completed", "Failed"],
+      default: "Pending",
+    },
     status: {
       type: String,
       enum: ORDER_STATUSES,
@@ -155,6 +160,10 @@ const orderSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "DeliveryPartner",
       default: null,
+    },
+    trx_id: {
+      type: String,
+      trim: true,
     },
   },
   { timestamps: true },

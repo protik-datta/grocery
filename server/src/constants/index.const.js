@@ -6,7 +6,7 @@ const ORDER_STATUSES = [
   "Delivered",
   "Cancelled",
 ];
-const PAYMENT_METHODS = ["cash", "card"];
+const PAYMENT_METHODS = ["cash", "card", "bkash", "nagad", "rocket"];
 
 module.exports = {
   ORDER_STATUSES,

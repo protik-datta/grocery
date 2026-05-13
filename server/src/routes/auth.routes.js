@@ -6,13 +6,18 @@ const {
   login,
   getMe,
   logout,
+  getAllUsers,
+  deleteUser
 } = require("../controllers/auth.controller");
 const { protect } = require("../middlewares/protect.middleware");
+const { isAdmin } = require('../middlewares/admin.middleware');
 const upload = multer();
 
 router.post("/register", upload.none(), register);
 router.post("/login", upload.none(), login);
 router.get("/me", protect, getMe);
+router.get("/all-users", protect, isAdmin, getAllUsers);
 router.post("/logout", protect, logout);
+router.delete("/delete-user/:id", protect, isAdmin, deleteUser);
 
 module.exports = router;
