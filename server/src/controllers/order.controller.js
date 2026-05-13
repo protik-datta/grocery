@@ -143,10 +143,11 @@ const getMyOrders = asyncHandler(async (req, res) => {
   const cached = await redis.get(cacheKey);
 
   if (cached) {
+    const cachedData = JSON.parse(cached);
     return res.status(200).json({
       status: "success",
       source: "cache",
-      data: JSON.parse(cached),
+      data: cachedData.data || cachedData,
     });
   }
 
@@ -161,7 +162,11 @@ const getMyOrders = asyncHandler(async (req, res) => {
   };
 
   await redis.setex(cacheKey, 300, JSON.stringify(response));
-  res.status(200).json(response);
+  res.status(200).json({
+    status: "success",
+    source: "db",
+    ...responseData,
+  });
 });
 
 // get order by id
@@ -170,10 +175,11 @@ const getOrderById = asyncHandler(async (req, res) => {
   const cached = await redis.get(cacheKey);
 
   if (cached) {
+    const cachedData = JSON.parse(cached);
     return res.status(200).json({
       status: "success",
       source: "cache",
-      data: JSON.parse(cached),
+      data: cachedData.data || cachedData,
     });
   }
 
@@ -203,7 +209,11 @@ const getOrderById = asyncHandler(async (req, res) => {
   };
 
   await redis.setex(cacheKey, 300, JSON.stringify(response));
-  res.status(200).json(response);
+  res.status(200).json({
+    status: "success",
+    source: "db",
+    data: order,
+  });
 });
 
 // get all order
@@ -260,7 +270,7 @@ const createDeliveryPartner = asyncHandler(async (req, res) => {
 
 // assign delivery partner to order
 const assginDeliveryPartner = asyncHandler(async (req, res) => {
-  const {orderId, partnerId} = req.body;
+  const { orderId, partnerId } = req.body;
 
   const order = await Order.findById(orderId);
   if (!order) {
@@ -369,5 +379,5 @@ module.exports = {
   updateOrder,
   assginDeliveryPartner,
   deleteOrder,
-  createDeliveryPartner
+  createDeliveryPartner,
 };
