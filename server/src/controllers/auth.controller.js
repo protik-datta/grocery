@@ -29,6 +29,11 @@ const register = asyncHandler(async (req, res) => {
     password: hashedPassword,
   });
 
+  const token = generateToken(user._id);
+
+  setAuthCookie(res, token);
+  user.password = undefined;
+
   res.status(201).json({
     success: true,
     data: user,
@@ -71,10 +76,11 @@ const getMe = asyncHandler(async (req, res) => {
   const cachedUser = await redis.get(redisKey);
 
   if (cachedUser) {
+    const userData = JSON.parse(cachedUser);
     return res.status(200).json({
       success: true,
       source: "redis",
-      data: JSON.parse(cachedUser),
+      data: userData.data || userData,
     });
   }
 
@@ -125,7 +131,7 @@ const getAllUsers = asyncHandler(async (req, res) => {
 const deleteUser = asyncHandler(async (req, res) => {
   const user = await User.findByIdAndDelete(req.params.id);
 
-  if(!user){
+  if (!user) {
     return res.status(404).json({
       status: false,
       message: "User not found",
@@ -158,5 +164,5 @@ module.exports = {
   getMe,
   logout,
   getAllUsers,
-  deleteUser
+  deleteUser,
 };

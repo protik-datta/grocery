@@ -5,6 +5,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Search, User, Menu, X } from "lucide-react";
 import UserDropdown from "./UserDropdown";
 import useCartStore from "../../../store/cartStore";
+import { useAuth } from "../../../store/useAuthStore";
 
 const navItems = [
   { id: 1, label: "Home", path: "/" },
@@ -13,15 +14,13 @@ const navItems = [
 ];
 
 const Navbar = () => {
-  const [user] = useState("Protik");
-  const [userEmail] = useState("protik@gmail.com");
+  const { user, isLoading } = useAuth();
   const [mobileNav, setMobileNav] = useState(false);
   const [search, setSearch] = useState("");
   const [mobileSearch, setMobileSearch] = useState(false);
   const { openCart, items } = useCartStore();
 
   const navigate = useNavigate();
-
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
 
   const navLinkClass = ({ isActive }) =>
@@ -103,12 +102,14 @@ const Navbar = () => {
             </div>
 
             {/* User / Login */}
-            {user ? (
-              <UserDropdown user={{ name: user, email: userEmail }} />
+            {isLoading ? (
+              <div className="w-8 h-8 rounded-full bg-gray-100 animate-pulse" />
+            ) : user ? (
+              <UserDropdown user={user} />
             ) : (
               <Link to="/login">
-                <button className="bg-[#1B3022] px-4 py-2 text-white rounded-3xl cursor-pointer flex items-center gap-x-1 text-sm">
-                  <User size={18} /> Sign Up
+                <button className="bg-[#1B3022] px-4 py-2 text-white rounded-3xl cursor-pointer flex items-center gap-x-1 text-[13px] md:text-sm font-medium">
+                  <User size={16} /> Login
                 </button>
               </Link>
             )}
