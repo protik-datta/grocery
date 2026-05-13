@@ -155,13 +155,12 @@ const getMyOrders = asyncHandler(async (req, res) => {
     .sort({ createdAt: -1 })
     .select("orderNumber status total createdAt items");
 
-  const response = {
-    status: "success",
+  const responseData = {
     count: orders.length,
     data: orders,
   };
 
-  await redis.setex(cacheKey, 300, JSON.stringify(response));
+  await redis.setex(cacheKey, 300, JSON.stringify(responseData));
   res.status(200).json({
     status: "success",
     source: "db",
@@ -203,12 +202,7 @@ const getOrderById = asyncHandler(async (req, res) => {
       .json({ success: false, message: "Not authorized to view this order" });
   }
 
-  const response = {
-    status: "success",
-    data: order,
-  };
-
-  await redis.setex(cacheKey, 300, JSON.stringify(response));
+  await redis.setex(cacheKey, 300, JSON.stringify(order));
   res.status(200).json({
     status: "success",
     source: "db",
@@ -222,10 +216,14 @@ const getAllOrders = asyncHandler(async (req, res) => {
 
   const cached = await redis.get(cacheKey);
   if (cached) {
+    const cachedData = JSON.parse(cached);
     return res.status(200).json({
       status: "success",
       source: "cache",
-      data: JSON.parse(cached),
+      data: cachedData.data || cachedData,
+      count:
+        cachedData.count ||
+        (cachedData.data ? cachedData.data.length : cachedData.length),
     });
   }
 
@@ -233,16 +231,20 @@ const getAllOrders = asyncHandler(async (req, res) => {
     .populate("user", "name email phone")
     .sort("-createdAt");
 
-  const response = {
-    status: "success",
+  const responseData = {
     count: orders.length,
     data: orders,
   };
 
-  await redis.setex(cacheKey, 300, JSON.stringify(response));
-  res.status(200).json(response);
+  await redis.setex(cacheKey, 300, JSON.stringify(responseData));
+  res.status(200).json({
+    status: "success",
+    source: "db",
+    ...responseData,
+  });
 });
 
+// create delivery partner
 const createDeliveryPartner = asyncHandler(async (req, res) => {
   const { name, email, phone, vehicleType } = req.body;
 
