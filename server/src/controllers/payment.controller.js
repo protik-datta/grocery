@@ -109,6 +109,12 @@ const paymentIPN = asyncHandler(async (req, res) => {
       order.status = "Placed";
       order.trx_id = bank_tran_id;
       await order.save();
+
+      await Promise.all([
+        redis.del(`order:${order._id}`),
+        redis.del(`orders:user:${order.user}`),
+        redis.del("admin:orders:all"),
+      ]);
     }
   }
 
