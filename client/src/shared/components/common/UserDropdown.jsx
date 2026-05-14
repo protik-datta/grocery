@@ -8,6 +8,7 @@ import {
   X,
 } from "lucide-react";
 import { useLogout } from "../../../service/logout.api";
+import { Link } from "react-router-dom";
 
 const menuItems = [
   { icon: ShoppingBag, label: "My Orders", path: "/orders" },
@@ -149,14 +150,31 @@ function ItemList({ items, onClose, mobile, danger, divider, onLogout }) {
   return (
     <div className={`${divider ? "border-t border-gray-100" : ""} py-1.5`}>
       {items.map(({ icon: Icon, label, path }) => {
+        // 2. path extract koro
         const isLogout = label === "Logout";
+
+        // Logout hole button, naile Link
+        if (isLogout) {
+          return (
+            <button
+              key={label}
+              onClick={() => {
+                onClose();
+                onLogout();
+              }}
+              className={`flex items-center gap-3 px-4 w-full transition-colors ${mobile ? "py-3.5 text-[15px]" : "py-2.5 text-sm"} text-red-500 hover:bg-red-50`}
+            >
+              <Icon size={mobile ? 19 : 17} className="text-red-400" />
+              {label}
+            </button>
+          );
+        }
+
         return (
-          <button
+          <Link
             key={label}
-            onClick={() => {
-              onClose();
-              if (isLogout) onLogout();
-            }}
+            to={path} // 3. path ekhane set koro
+            onClick={onClose}
             className={`flex items-center gap-3 px-4 w-full transition-colors ${mobile ? "py-3.5 text-[15px]" : "py-2.5 text-sm"} ${danger ? "text-red-500 hover:bg-red-50" : "text-gray-700 hover:bg-gray-50"}`}
           >
             <Icon
@@ -164,7 +182,7 @@ function ItemList({ items, onClose, mobile, danger, divider, onLogout }) {
               className={danger ? "text-red-400" : "text-gray-400"}
             />
             {label}
-          </button>
+          </Link>
         );
       })}
     </div>

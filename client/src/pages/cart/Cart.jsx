@@ -1,5 +1,6 @@
 import { X, Minus, Plus, Trash2, ShoppingCart, ArrowRight } from "lucide-react";
-import useCartStore from '../../store/cartStore';
+import useCartStore from "../../store/cartStore";
+import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
   const { items, isOpen, closeCart, removeItem, updateQuantity } =
@@ -10,6 +11,13 @@ const Cart = () => {
     0,
   );
   const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    closeCart(),
+    navigate('/checkout')
+  }
 
   return (
     <>
@@ -149,7 +157,10 @@ const Cart = () => {
               <span>Total</span>
               <span>৳{subtotal.toFixed(2)}</span>
             </div>
-            <button className="w-full bg-[#F97316] transition-all text-white font-semibold text-[15px] py-4 rounded-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer">
+            <button
+              className="w-full bg-[#F97316] transition-all text-white font-semibold text-[15px] py-4 rounded-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer"
+              onClick={handleClick}
+            >
               Proceed to Checkout
               <ArrowRight size={18} />
             </button>

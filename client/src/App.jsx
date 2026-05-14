@@ -16,6 +16,7 @@ import PaymentFailed from "./pages/payment/PaymentFailed";
 import NotFound from "./shared/components/common/NotFound";
 import ProtectedRoute from "./shared/components/routes/ProtectedRoute";
 import AuthRoute from "./shared/components/routes/AuthRoute";
+import Checkout from "./pages/checkout/Checkout";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           />
           <Route path="/search" element={<SearchPage />} />
           <Route path="/deals" element={<DealsPage />} />
+          <Route path="/checkout" element={<Checkout />} />
           {/* protected route */}
           <Route element={<ProtectedRoute />}>
             <Route path="/orders" element={<OrderPage />} />

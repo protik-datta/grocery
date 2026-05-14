@@ -9,17 +9,14 @@ import {
 } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useAuth } from "../../store/useAuthStore";
 import { useChatbot } from "./chatbot.hook";
+import { useAuth } from "../../store/useAuthStore";
 
 const ChatBot = () => {
   const { user } = useAuth();
   const { mutate: sendMessage, isPending } = useChatbot();
   const [isOpen, setIsOpen] = useState(false);
-  const [messages, setMessages] = useState(() => {
-    const saved = localStorage.getItem("mira_chat_history");
-    return saved ? JSON.parse(saved) : [];
-  });
+  const [messages, setMessages] = useState([]);
   const [inputValue, setInputValue] = useState("");
   const messagesEndRef = useRef(null);
 
@@ -88,7 +85,7 @@ const ChatBot = () => {
               duration: 0.38,
             }}
             onClick={() => setIsOpen(true)}
-            className={`fixed right-0 top-1/2 -translate-y-1/2 z-50 bg-[#1B3022] text-white ${user ? "flex" : "hidden"} flex-col items-center gap-2 py-4 px-3 rounded-l-lg shadow-xl hover:bg-[#243d2c] transition-colors group`}
+            className={`fixed right-0 top-1/2 -translate-y-1/2 z-9999 bg-[#1B3022] text-white ${user ? "flex" : "hidden"} flex-col items-center gap-2 py-4 px-3 rounded-l-lg shadow-xl hover:bg-[#243d2c] transition-colors group`}
           >
             <div className="relative">
               <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
@@ -179,7 +176,7 @@ const ChatBot = () => {
                       </div>
                     </div>
                   ) : (
-                    <div
+                    <motion.div
                       key={msg.id}
                       initial={{ opacity: 0, scale: 0.88, y: 8 }}
                       animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -196,7 +193,7 @@ const ChatBot = () => {
                       <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center text-gray-500 shrink-0">
                         <User size={15} />
                       </div>
-                    </div>
+                    </motion.div>
                   ),
                 )}
 
