@@ -118,5 +118,11 @@ productSchema.pre("save", function () {
 
 });
 
+productSchema.virtual("reviews", {
+  ref: "Review",
+  localField: "_id",
+  foreignField: "product",
+});
+
 const productModel = mongoose.model("Product", productSchema);
 module.exports = productModel;

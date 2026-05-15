@@ -11,6 +11,11 @@ const ProductInfoDetails = ({ product }) => {
     addItem(product, quantity);
   };
 
+  const categoryDisplay =
+    typeof product?.category === "object"
+      ? product.category.name
+      : product?.category || "General";
+
   return (
     <Container>
       <div className="py-5">
@@ -19,7 +24,7 @@ const ProductInfoDetails = ({ product }) => {
           <div className="w-full lg:w-1/3 flex justify-center lg:block">
             <div className="relative inline-flex">
               <img
-                src={product.image}
+                src={product.imageUrl}
                 alt={product.name}
                 className="w-60 h-60 lg:w-95 lg:h-95 lg:ml-20 object-contain"
               />
@@ -32,7 +37,9 @@ const ProductInfoDetails = ({ product }) => {
           {/* product details */}
           <div className="px-6 lg:p-10 w-2/3">
             <p className="capitalize text-[#6B7280] font-medium text-[12px] leading-5 mb-2">
-              {product.category.replace("-", " & ")}
+              {typeof categoryDisplay === "string"
+                ? categoryDisplay.replace(/-/g, " & ")
+                : categoryDisplay}
             </p>
             <h2 className="text-[#1B3022] text-[30px] font-semibold leading-9">
               {product.name}

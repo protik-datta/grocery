@@ -1,8 +1,9 @@
-const Review = require("../model/review.model");
-const Product = require("../model/product.model");
 const mongoose = require("mongoose");
 
 async function syncProductRating(productId) {
+  const Review = mongoose.model("Review");
+  const Product = mongoose.model("Product");
+
   const [result] = await Review.aggregate([
     { $match: { product: new mongoose.Types.ObjectId(productId) } },
     {

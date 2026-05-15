@@ -1,41 +1,31 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
-import { useEffect } from 'react';
+import { usePostReview } from "../../hooks/productApi.hook";
 
+// Prop-e onSubmit add kora holo
 const ReviewInput = ({ product, onSubmit }) => {
   const [selectedStar, setSelectedStar] = useState(0);
-  const [name, setName] = useState("");
   const [comment, setComment] = useState("");
   const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState({});
 
+  const { mutate: addReview, isPending } = usePostReview();
+
   const handleReset = () => {
     setSubmitted(false);
     setSelectedStar(0);
-    setName("");
     setComment("");
     setErrors({});
   };
-
-  useEffect(() => {
-    let timer;
-
-    if (submitted) {
-      timer = setTimeout(() => {
-        handleReset();
-      }, 2000);
-    }
-
-    return ()=> clearTimeout(timer);
-  }, [submitted]);
 
   const starLabels = ["", "Poor", "Fair", "Good", "Very Good", "Excellent"];
 
   const validate = () => {
     const newErrors = {};
     if (!selectedStar) newErrors.star = "Please select a rating.";
-    if (!name.trim()) newErrors.name = "Name is required.";
     if (!comment.trim()) newErrors.comment = "Review comment is required.";
+    if (comment.length < 3)
+      newErrors.comment = "Review must be at least 3 characters.";
     return newErrors;
   };
 
@@ -46,17 +36,34 @@ const ReviewInput = ({ product, onSubmit }) => {
       return;
     }
 
-    const review = {
-      _id: Date.now().toString(),
-      user: name.trim(),
+    const payload = {
       rating: selectedStar,
       comment: comment.trim(),
-      helpful: 0,
-      createdAt: new Date().toISOString(),
     };
 
-    onSubmit?.(review);
-    setSubmitted(true);
+    addReview(
+      { productId: product._id, payload },
+      {
+        onSuccess: (response) => {
+          // Response theke data nite hobe, na thakle optimistic update object
+          const newReviewData = response?.data || {
+            _id: Date.now().toString(),
+            user: { name: "You" },
+            rating: selectedStar,
+            comment: comment.trim(),
+            createdAt: new Date().toISOString(),
+            helpful: 0,
+          };
+
+          // Parent-er handleNewReview function-ke call kora holo
+          onSubmit?.(newReviewData);
+          setSubmitted(true);
+        },
+        onError: (err) => {
+          console.error("Review submission failed", err);
+        },
+      },
+    );
   };
 
   if (submitted) {
@@ -100,7 +107,6 @@ const ReviewInput = ({ product, onSubmit }) => {
       </h3>
 
       <div className="flex flex-col gap-5 max-w-lg">
-        {/* Star Rating — click to fill only, no hover effect */}
         <div className="flex flex-col gap-2">
           <label className="text-[#1B3022] text-[13px] font-medium leading-5">
             Your Rating
@@ -112,12 +118,12 @@ const ReviewInput = ({ product, onSubmit }) => {
                 <button
                   key={star}
                   type="button"
+                  disabled={isPending}
                   onClick={() => {
                     setSelectedStar(star);
                     setErrors((e) => ({ ...e, star: undefined }));
                   }}
-                  className="cursor-pointer"
-                  aria-label={`${star} star${star > 1 ? "s" : ""}`}
+                  className="cursor-pointer disabled:cursor-not-allowed"
                 >
                   <img
                     src={filled ? assets.star : assets.blank_star}
@@ -128,7 +134,6 @@ const ReviewInput = ({ product, onSubmit }) => {
                 </button>
               );
             })}
-
             {selectedStar > 0 && (
               <span className="ml-2 text-[12px] text-[#52525C] leading-4">
                 {starLabels[selectedStar]}
@@ -136,89 +141,45 @@ const ReviewInput = ({ product, onSubmit }) => {
             )}
           </div>
           {errors.star && (
-            <p className="text-red-500 text-[12px] leading-4">{errors.star}</p>
+            <p className="text-red-500 text-[12px]">{errors.star}</p>
           )}
         </div>
 
-        {/* Name Input — compact fixed width */}
         <div className="flex flex-col gap-1.5">
-          <label
-            htmlFor="review-name"
-            className="text-[#1B3022] text-[13px] font-medium leading-5"
-          >
-            Your Name
-          </label>
-          <input
-            id="review-name"
-            type="text"
-            value={name}
-            onChange={(e) => {
-              setName(e.target.value);
-              setErrors((err) => ({ ...err, name: undefined }));
-            }}
-            placeholder="e.g. John Doe"
-            className={`w-56 h-9 px-3 rounded-lg border text-[13px] text-[#1B3022] placeholder:text-[#52525C]/35 bg-white/70 outline-none transition-all duration-200 focus:ring-[#1B3022] focus:border-[#1B3022] ${
-              errors.name
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200"
-            }`}
-          />
-          {errors.name && (
-            <p className="text-red-500 text-[12px] leading-4">{errors.name}</p>
-          )}
-        </div>
-
-        {/* Comment Textarea — compact max-width */}
-        <div className="flex flex-col gap-1.5">
-          <label
-            htmlFor="review-comment"
-            className="text-[#1B3022] text-[13px] font-medium leading-5"
-          >
+          <label className="text-[#1B3022] text-[13px] font-medium">
             Your Review
           </label>
           <textarea
-            id="review-comment"
             value={comment}
+            disabled={isPending}
             onChange={(e) => {
               setComment(e.target.value);
               setErrors((err) => ({ ...err, comment: undefined }));
             }}
-            placeholder="Share your experience with this product..."
+            placeholder="Share your experience..."
             rows={4}
-            className={`w-full max-w-sm px-3 py-2.5 rounded-lg border text-[13px] text-[#1B3022] placeholder:text-[#52525C]/35 bg-white/70 outline-none resize-none transition-all duration-200 focus:ring-[#1B3022] focus:border-[#1B3022] ${
-              errors.comment
-                ? "border-red-300 focus:ring-red-100"
-                : "border-gray-200"
+            className={`w-full max-w-sm px-3 py-2.5 rounded-lg border text-[13px] outline-none ${
+              errors.comment ? "border-red-300" : "border-gray-200"
             }`}
           />
-          <div className="flex items-center justify-between max-w-sm">
-            {errors.comment ? (
-              <p className="text-red-500 text-[12px] leading-4">
-                {errors.comment}
-              </p>
-            ) : (
-              <span />
+          <div className="flex justify-between max-w-sm">
+            {errors.comment && (
+              <p className="text-red-500 text-[12px]">{errors.comment}</p>
             )}
-            <span
-              className={`text-[11px] leading-4 ${
-                comment.length > 500 ? "text-red-400" : "text-[#52525C]/40"
-              }`}
-            >
+            <span className="text-[11px] text-[#52525C]/40">
               {comment.length}/500
             </span>
           </div>
         </div>
 
-        {/* Submit */}
-        <div>
-          <button
-            type="button"
-            onClick={handleSubmit}
-            className="h-9 px-5 rounded-lg bg-[#1B3022] text-white text-[13px] font-medium cursor-pointer transition-all duration-200 hover:bg-[#1B3022]/85 active:scale-[0.98]"
-          >
-            Submit Review
-          </button>
-        </div>
+        <button
+          type="button"
+          disabled={isPending}
+          onClick={handleSubmit}
+          className="h-9 w-max px-5 rounded-lg bg-[#1B3022] text-white text-[13px] font-medium disabled:bg-gray-400"
+        >
+          {isPending ? "Submitting..." : "Submit Review"}
+        </button>
       </div>
     </div>
   );

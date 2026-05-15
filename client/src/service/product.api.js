@@ -1,4 +1,4 @@
-import api from '../api/axios';
+import api from "../api/axios";
 
 export const getCategories = async () => {
   try {
@@ -38,3 +38,19 @@ export const getProducts = async ({
     throw error.response?.data || error;
   }
 };
+
+export const getProductBySlug = async (slug) => {
+  const response = await api.get(`/products/${slug}`);
+  return response.data;
+};
+
+export const postReview = async ({ productId, payload }) => {
+  const response = await api.post(`/reviews/post-review/${productId}`, payload);
+  return response;
+};
+
+export const postHelpful = async (reviewId) => {
+  const { data } = await api.patch(`/reviews/${reviewId}/helpful`);
+  return data;
+};
+

@@ -186,7 +186,7 @@ const FilterProductContainer = ({ onFilterOpen }) => {
       {/* Loading */}
       {(catLoading || prodLoading) && (
         <div className="min-h-[40vh] flex items-center justify-center">
-          <p className="text-gray-500 text-sm"><Loader/></p>
+          <div className="text-gray-500 text-sm"><Loader/></div>
         </div>
       )}
 

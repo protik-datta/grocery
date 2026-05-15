@@ -39,7 +39,7 @@ app.use(cookieParser());
 // rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: 100000,
 });
 app.use(limiter);
 
@@ -82,6 +82,8 @@ const orderRoutes = require("./src/routes/order.routes");
 app.use("/api/orders", orderRoutes);
 const paymentRoutes = require("./src/routes/payment.routes");
 app.use("/api/v1/payment", paymentRoutes);
+const reviewRoutes = require("./src/routes/review.routes");
+app.use("/api/reviews", reviewRoutes);
 // ------- routes -------- //
 
 module.exports = app;

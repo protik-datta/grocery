@@ -104,6 +104,7 @@ const getAllProducts = asyncHandler(async (req, res) => {
   const [products, total] = await Promise.all([
     Product.find(filter)
       .populate("category", "name slug imageUrl")
+      .select("-reviews")
       .sort(sortStage)
       .skip(skip)
       .limit(limit)
@@ -150,6 +151,14 @@ const getProductBySlug = asyncHandler(async (req, res) => {
 
   const product = await Product.findOne({ slug })
     .populate("category", "name slug imageUrl")
+    .populate({
+      path: "reviews",
+      options: { sort: { createdAt: -1 } },
+      populate: {
+        path: "user",
+        select: "name avatar",
+      },
+    })
     .lean();
   if (!product) throw new AppError(404, "Product not found");
 

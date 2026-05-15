@@ -1,15 +1,21 @@
-import { useState, useEffect } from "react";
-import Container from "../../shared/components/common/Container";
-import ProductReviewTop from "./ProductReviewTop";
-import Reviews from "./Reviews";
-import ReviewInput from "./ReviewInput";
+import { useEffect, useState } from 'react';
+import Container from '../../shared/components/common/Container';
+import ProductReviewTop from './ProductReviewTop'
+import Reviews from './Reviews';
+import ReviewInput from './ReviewInput';
 
 const ProductReview = ({ product }) => {
   const [reviews, setReviews] = useState(product.reviews ?? []);
 
   useEffect(() => {
     setReviews(product.reviews ?? []);
-  }, [product._id]);
+  }, [product._id, product.reviews]);
+
+  const handleHelpfulUpdate = (updatedReview) => {
+    setReviews((prev) =>
+      prev.map((r) => (r._id === updatedReview._id ? updatedReview : r)),
+    );
+  };
 
   const enrichedProduct = {
     ...product,
@@ -23,26 +29,23 @@ const ProductReview = ({ product }) => {
         : product.rating,
   };
 
-  const handleNewReview = (review) => {
-    setReviews((prev) => [review, ...prev]);
-  };
-
   return (
     <Container>
-      <div>
-        <h2 className="text-2xl font-semibold py-5">Customer Reviews</h2>
-      </div>
-
+      <h2 className="text-2xl font-semibold py-5">Customer Reviews</h2>
       <div className="bg-white/50 border border-gray-100 rounded-2xl">
         <ProductReviewTop product={enrichedProduct} />
-        <Reviews product={enrichedProduct} />
-
+        <Reviews
+          product={enrichedProduct}
+          onHelpfulUpdate={handleHelpfulUpdate}
+        />
         <div className="w-full h-px bg-gray-200" />
-
-        <ReviewInput product={enrichedProduct} onSubmit={handleNewReview} />
+        <ReviewInput
+          product={enrichedProduct}
+          onSubmit={(newR) => setReviews([newR, ...reviews])}
+        />
       </div>
     </Container>
   );
 };
 
-export default ProductReview;
+export default ProductReview
