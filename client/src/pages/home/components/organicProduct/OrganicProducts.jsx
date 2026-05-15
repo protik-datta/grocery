@@ -2,12 +2,13 @@ import { useState } from "react";
 import Container from "../../../../shared/components/common/Container";
 import { ArrowRight } from "lucide-react";
 import OrganicProductContainer from "./OrganicProductContainer";
-import { dummyProducts } from "../../../../assets/assets";
+import { useProducts } from '../../../../hooks/productApi.hook';
 
 const OrganicProducts = () => {
-  const organicProducts = dummyProducts.filter(
-    (i) => i.isOrganic === true,
-  ).length;
+  const { data: productResponse } = useProducts({ limit: 50 });
+  const products = productResponse?.data;
+
+  const organicProducts = products?.filter((i) => i.isOrganic === true).length;
   const [showAll, setShowAll] = useState(false);
 
   return (

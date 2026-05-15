@@ -36,6 +36,7 @@ const register = asyncHandler(async (req, res) => {
 
   res.status(201).json({
     success: true,
+    message: "User registration successfull",
     data: user,
   });
 });

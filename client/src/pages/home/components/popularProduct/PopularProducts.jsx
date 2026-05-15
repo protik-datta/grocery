@@ -2,12 +2,13 @@ import { useState } from "react";
 import Container from "../../../../shared/components/common/Container";
 import ProductContainer from "./ProductContainer";
 import { ArrowRight } from "lucide-react";
-import { dummyProducts } from "../../../../assets/assets";
+import { useProducts } from "../../../../hooks/productApi.hook";
 
 const PopularProducts = () => {
-  const popularProducts = dummyProducts.filter(
-    (i) => i.isPopular === true,
-  ).length;
+  const { data: productResponse } = useProducts({ limit: 50 });
+  const products = productResponse?.data
+
+  const popularProducts = products?.filter((i) => i.isPopular === true).length;
   const [showAll, setShowAll] = useState(false);
 
   return (

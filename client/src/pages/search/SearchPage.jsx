@@ -1,15 +1,19 @@
 import { Link, useSearchParams } from "react-router-dom";
 import Container from "../../shared/components/common/Container";
-import { assets, dummyProducts } from "../../assets/assets";
+import { assets } from "../../assets/assets";
 import ProductCard from "../../shared/ProductCard";
 import { SearchX, X } from "lucide-react";
+import { useProducts } from "../../hooks/productApi.hook";
 
 const SearchPage = () => {
+  const { data: productResponse } = useProducts({ limit: 50 });
+  const product = productResponse?.data;
+
   const [searchParams, setSearchParams] = useSearchParams();
 
   const query = searchParams.get("q") || "";
 
-  const filteredProducts = dummyProducts.filter(
+  const filteredProducts = product?.filter(
     (product) =>
       product.name.toLowerCase().includes(query.toLowerCase().trim()) ||
       product.description.toLowerCase().includes(query.toLowerCase().trim()),
@@ -44,15 +48,15 @@ const SearchPage = () => {
           Search for "{query}"
         </h1>
         <p className="text-[#6B7280] text-[13px] sm:text-[14px] font-normal leading-5 mt-1">
-          {filteredProducts.length} item
-          {filteredProducts.length !== 1 ? "s" : ""} found
+          {filteredProducts?.length} item
+          {filteredProducts?.length !== 1 ? "s" : ""} found
         </p>
       </div>
 
       {/* products */}
-      {filteredProducts.length > 0 ? (
+      {filteredProducts?.length > 0 ? (
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 mb-20 md:mb-40 sm:gap-4 lg:gap-6 py-5 sm:py-6 lg:py-10">
-          {filteredProducts.map((product) => (
+          {filteredProducts?.map((product) => (
             <ProductCard key={product._id} product={product} />
           ))}
         </div>
