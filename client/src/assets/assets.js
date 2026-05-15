@@ -78,19 +78,19 @@ export const sortOptions = [
   },
   {
     label: "Price: Low → High",
-    value: "price-asc",
+    value: "price_asc",
   },
   {
     label: "Price: High → Low",
-    value: "price-desc",
+    value: "price_desc",
   },
   {
     label: "Top Rated",
-    value: "top-rated",
+    value: "top_rated",
   },
   {
     label: "A → Z",
-    value: "a-z",
+    value: "a_z",
   },
 ];
 

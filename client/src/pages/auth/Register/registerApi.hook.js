@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { showError, showSuccess } from "../../../utils/toast";
-import { registerUser } from "./registerApi";
+import { registerUser } from './register.api';
 
 export const useRegister = () => {
   const queryClient = useQueryClient();

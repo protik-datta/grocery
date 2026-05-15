@@ -1,30 +1,31 @@
 import { useMemo } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { assets, categoriesData } from "../../assets/assets";
+import { assets } from "../../assets/assets";
+import { useCategories } from "../../hooks/productApi.hook";
+import Loader from "../../utils/Loader";
 
 const CategoryFilter = ({ isMobile = false, onClose }) => {
+  const { data: categoriesResponse, isLoading } = useCategories();
   const [searchParams, setSearchParams] = useSearchParams();
+  const navigate = useNavigate();
 
   const categoryFromUrl = searchParams.get("category");
   const currentCategorySlug = categoryFromUrl || "all-categories";
-
   const minPriceFromUrl = searchParams.get("minPrice") || "";
   const maxPriceFromUrl = searchParams.get("maxPrice") || "";
 
-  const navigate = useNavigate();
-
   const categories = useMemo(() => {
-    return [
-      { slug: "all-categories", name: "All Categories" },
-      ...categoriesData,
-    ];
-  }, []);
+    const apiCats = categoriesResponse?.data || [];
+    return [{ slug: "all-categories", name: "All Categories" }, ...apiCats];
+  }, [categoriesResponse]);
 
-  const activeName =
-    categories.find((cat) => cat.slug === currentCategorySlug)?.name ||
-    "All Categories";
+  const activeName = useMemo(() => {
+    return (
+      categories.find((cat) => cat.slug === currentCategorySlug)?.name ||
+      "All Categories"
+    );
+  }, [categories, currentCategorySlug]);
 
-  // handle category change
   const handleCategoryChange = (slug) => {
     const params = new URLSearchParams(searchParams);
     if (slug === "all-categories") {
@@ -32,11 +33,11 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     } else {
       params.set("category", slug);
     }
+    params.set("page", 1);
     setSearchParams(params);
     onClose?.();
   };
 
-  // handle price change
   const handlePriceChange = (type, value) => {
     const params = new URLSearchParams(searchParams);
     if (value) {
@@ -44,32 +45,37 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     } else {
       params.delete(type);
     }
+    params.set("page", 1);
     setSearchParams(params);
   };
 
-  // categories jsx
   const categoriesJSX = (
     <div className="flex flex-col gap-1.5">
-      {categories.map((cat) => {
-        const isActive = currentCategorySlug === cat.slug;
-        return (
-          <button
-            key={cat.slug}
-            onClick={() => handleCategoryChange(cat.slug)}
-            className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-200 cursor-pointer font-normal ${
-              isActive
-                ? "bg-[#032E15] text-white font-medium"
-                : "text-gray-500 hover:bg-gray-100"
-            }`}
-          >
-            {cat.name}
-          </button>
-        );
-      })}
+      {isLoading ? (
+        <div className="py-6">
+          <Loader size="md" />
+        </div>
+      ) : (
+        categories.map((cat) => {
+          const isActive = currentCategorySlug === cat.slug;
+          return (
+            <button
+              key={cat.slug}
+              onClick={() => handleCategoryChange(cat.slug)}
+              className={`w-full text-left px-4 py-2.5 rounded-xl text-sm transition-all duration-200 cursor-pointer font-normal ${
+                isActive
+                  ? "bg-[#032E15] text-white font-medium"
+                  : "text-gray-500 hover:bg-gray-100"
+              }`}
+            >
+              {cat.name}
+            </button>
+          );
+        })
+      )}
     </div>
   );
 
-  // price jsx
   const priceJSX = (
     <div className="flex items-center gap-3">
       <input
@@ -90,7 +96,6 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
     </div>
   );
 
-  // clear
   const clearBtn = (categoryFromUrl || minPriceFromUrl || maxPriceFromUrl) && (
     <button
       onClick={() => {
@@ -122,7 +127,6 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
 
   return (
     <div className="py-6.5">
-      {/* top bar */}
       <div className="flex items-center">
         <img
           src={assets.home}
@@ -136,7 +140,6 @@ const CategoryFilter = ({ isMobile = false, onClose }) => {
         </p>
       </div>
 
-      {/* filter card */}
       <div className="w-72 bg-white rounded-2xl border border-gray-100 p-4 mt-6">
         <div className="mb-4">
           <h2 className="text-[#1B3022] text-[14px] font-semibold leading-5">

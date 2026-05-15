@@ -87,22 +87,19 @@ const getAllProducts = asyncHandler(async (req, res) => {
     const categoryDoc = await Category.findOne({ slug: category }).select(
       "_id",
     );
-
-    if (!categoryDoc) {
-      throw new AppError(404, "Category not found");
+    if (categoryDoc) {
+      filter.category = categoryDoc._id;
     }
-
-    filter.category = categoryDoc._id;
   }
 
   if (minPrice !== undefined || maxPrice !== undefined) {
     filter.price = {};
-    if (minPrice !== undefined) filter.price.$gte = minPrice;
-    if (maxPrice !== undefined) filter.price.$lte = maxPrice;
+    if (minPrice !== undefined) filter.price.$gte = Number(minPrice);
+    if (maxPrice !== undefined) filter.price.$lte = Number(maxPrice);
   }
 
   const skip = (page - 1) * limit;
-  const sortStage = SORT_MAP[sort];
+  const sortStage = SORT_MAP[sort] || { createdAt: -1 };
 
   const [products, total] = await Promise.all([
     Product.find(filter)
@@ -120,8 +117,8 @@ const getAllProducts = asyncHandler(async (req, res) => {
     data: products,
     pagination: {
       total,
-      page,
-      limit,
+      page: Number(page),
+      limit: Number(limit),
       totalPages,
       hasNextPage: page < totalPages,
       hasPrevPage: page > 1,
@@ -129,7 +126,12 @@ const getAllProducts = asyncHandler(async (req, res) => {
   };
 
   await redis.setex(cacheKey, 300, JSON.stringify(payload));
-  res.status(200).json({ status: "success", source: "db", ...payload });
+
+  res.status(200).json({
+    status: "success",
+    source: "db",
+    ...payload,
+  });
 });
 
 // get product by slug
