@@ -3,21 +3,25 @@ import useCartStore from "../../store/cartStore";
 import { useNavigate } from "react-router-dom";
 
 const Cart = () => {
-  const { items, isOpen, closeCart, removeItem, updateQuantity } =
-    useCartStore();
-
-  const subtotal = items.reduce(
-    (sum, i) => sum + i.product.price * i.quantity,
-    0,
-  );
-  const totalItems = items.reduce((sum, i) => sum + i.quantity, 0);
+  // Zustand স্টোর থেকে প্রয়োজনীয় স্টেট এবং ফাংশনগুলো নিয়ে আসা হলো
+  const {
+    items,
+    isOpen,
+    deliveryFee,
+    closeCart,
+    removeItem,
+    updateQuantity,
+    totalItems,
+    subtotal,
+    totalAmount,
+  } = useCartStore();
 
   const navigate = useNavigate();
 
   const handleClick = () => {
-    closeCart(),
-    navigate('/checkout')
-  }
+    closeCart();
+    navigate("/checkout");
+  };
 
   return (
     <>
@@ -48,7 +52,7 @@ const Cart = () => {
                 Your Cart
               </h2>
               <p className="text-gray-400 text-xs mt-0.5">
-                {totalItems} {totalItems === 1 ? "item" : "items"}
+                {totalItems()} {totalItems() === 1 ? "item" : "items"}
               </p>
             </div>
           </div>
@@ -85,7 +89,7 @@ const Cart = () => {
                 {/* Image */}
                 <div className="w-16 h-16 flex items-center justify-center shrink-0 overflow-hidden">
                   <img
-                    src={product.image}
+                    src={product.imageUrl}
                     alt={product.name}
                     className="w-full h-full object-contain p-1"
                   />
@@ -97,7 +101,7 @@ const Cart = () => {
                     {product.name}
                   </p>
                   <p className="text-[#6B7280] text-xs mt-0.5">
-                    ৳{product.price} / {product.unit}
+                    ৳{product.offerPrice || product.price} / {product.unit}
                   </p>
 
                   {/* Quantity controls */}
@@ -123,7 +127,10 @@ const Cart = () => {
                 {/* Price + Delete */}
                 <div className="flex flex-col items-end gap-3 shrink-0">
                   <p className="text-[#1B3022] text-sm font-bold">
-                    ৳{(product.price * quantity).toFixed(2)}
+                    ৳
+                    {((product.offerPrice || product.price) * quantity).toFixed(
+                      2,
+                    )}
                   </p>
                   <button
                     onClick={() => removeItem(product._id)}
@@ -146,16 +153,18 @@ const Cart = () => {
             <div className="flex justify-between text-sm text-gray-500">
               <span>Subtotal</span>
               <span className="text-[#1B3022] font-medium">
-                ৳{subtotal.toFixed(2)}
+                ৳{subtotal().toFixed(2)}
               </span>
             </div>
             <div className="flex justify-between text-sm text-gray-500">
               <span>Delivery</span>
-              <span className="text-green-600 font-semibold">Free</span>
+              <span className="text-green-600 font-semibold">
+                ৳{deliveryFee}
+              </span>
             </div>
             <div className="flex justify-between text-base font-bold text-[#1B3022] pt-2 border-t border-gray-100">
               <span>Total</span>
-              <span>৳{subtotal.toFixed(2)}</span>
+              <span>৳{totalAmount().toFixed(2)}</span>
             </div>
             <button
               className="w-full bg-[#F97316] transition-all text-white font-semibold text-[15px] py-4 rounded-2xl flex items-center justify-center gap-2 mt-2 cursor-pointer"

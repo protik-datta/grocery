@@ -5,11 +5,20 @@ import { ArrowRight } from "lucide-react";
 import { useProducts } from "../../../../hooks/productApi.hook";
 
 const PopularProducts = () => {
-  const { data: productResponse } = useProducts({ limit: 50 });
-  const products = productResponse?.data
+  const {
+    data: productResponse,
+    isPending,
+    isError,
+  } = useProducts({ limit: 50 });
+  const allProducts = productResponse?.data ?? [];
 
-  const popularProducts = products?.filter((i) => i.isPopular === true).length;
+  const popularProducts = allProducts.filter((i) => i.isPopular === true);
+
   const [showAll, setShowAll] = useState(false);
+
+  const displayProducts = showAll
+    ? popularProducts
+    : popularProducts.slice(0, 10);
 
   return (
     <Container className="py-6 sm:py-10">
@@ -23,7 +32,7 @@ const PopularProducts = () => {
           </p>
         </div>
 
-        {!showAll && popularProducts > 10 && (
+        {!showAll && popularProducts.length > 10 && (
           <button
             className="flex items-center text-[#F97316] text-sm font-semibold leading-5 gap-1 cursor-pointer shrink-0"
             onClick={() => setShowAll(true)}
@@ -33,7 +42,11 @@ const PopularProducts = () => {
         )}
       </div>
 
-      <ProductContainer limit={showAll ? undefined : 10} />
+      <ProductContainer
+        products={displayProducts}
+        isPending={isPending}
+        isError={isError}
+      />
     </Container>
   );
 };

@@ -6,6 +6,7 @@ const useCartStore = create(
     (set, get) => ({
       items: [],
       isOpen: false,
+      deliveryFee: 70,
 
       openCart: () => set({ isOpen: true }),
       closeCart: () => set({ isOpen: false }),
@@ -52,14 +53,17 @@ const useCartStore = create(
       totalItems: () => get().items.reduce((sum, i) => sum + i.quantity, 0),
 
       subtotal: () =>
-        get().items.reduce(
-          (sum, i) => sum + i.product.offerPrice * i.quantity,
-          0,
-        ),
+        get().items.reduce((sum, i) => sum + i.product.price * i.quantity, 0),
+
+      totalAmount: () => {
+        const subtotal = get().subtotal();
+        return subtotal > 0 ? subtotal + get().deliveryFee : 0;
+      },
+
+      clearCart: () => set({ items: [] }),
     }),
     {
       name: "cart-storage",
-
       storage: createJSONStorage(() => localStorage),
     },
   ),

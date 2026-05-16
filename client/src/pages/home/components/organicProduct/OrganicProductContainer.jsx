@@ -1,4 +1,4 @@
-import { useProducts } from '../../../../hooks/productApi.hook';
+import { useProducts } from "../../../../hooks/productApi.hook";
 import ProductCard from "../../../../shared/ProductCard";
 
 const OrganicProductContainer = ({ limit }) => {

@@ -7,8 +7,7 @@ const redis = require("../config/redis.config");
 
 // create order
 const createOrder = asyncHandler(async (req, res) => {
-  const { items, shippingAddress, paymentMethod, discount, deliveryFee } =
-    req.body;
+  const { items, shippingAddress, paymentMethod } = req.body;
 
   if (!items || items.length === 0) {
     return res.status(400).json({
@@ -16,6 +15,9 @@ const createOrder = asyncHandler(async (req, res) => {
       message: "Order must contain at least one item",
     });
   }
+
+  const DELIVERY_FEE = 70;
+  const APPLIED_DISCOUNT = 0;
 
   let calculatedSubtotal = 0;
   const orderItems = [];
@@ -29,8 +31,6 @@ const createOrder = asyncHandler(async (req, res) => {
     );
 
     if (!product) {
-      const exists = await Product.findById(item.product).select("name stock");
-
       if (reservedItems.length > 0) {
         await Product.bulkWrite(
           reservedItems.map(({ productId, quantity }) => ({
@@ -42,16 +42,12 @@ const createOrder = asyncHandler(async (req, res) => {
         );
       }
 
-      if (!exists) {
-        return res.status(404).json({
-          status: false,
-          message: `Product with id ${item.product} not found`,
-        });
-      }
-
+      const exists = await Product.findById(item.product).select("name stock");
       return res.status(400).json({
         status: false,
-        message: `Only ${exists.stock} unit(s) of "${exists.name}" available`,
+        message: exists
+          ? `Only ${exists.stock} unit(s) of "${exists.name}" available`
+          : `Product not found`,
       });
     }
 
@@ -68,6 +64,8 @@ const createOrder = asyncHandler(async (req, res) => {
 
     calculatedSubtotal += product.price * item.quantity;
   }
+
+  const totalAmount = calculatedSubtotal + DELIVERY_FEE - APPLIED_DISCOUNT;
 
   let coordinates;
   try {
@@ -106,8 +104,8 @@ const createOrder = asyncHandler(async (req, res) => {
     },
     paymentMethod,
     subtotal: calculatedSubtotal,
-    deliveryFee,
-    discount,
+    deliveryFee: DELIVERY_FEE,
+    discount: APPLIED_DISCOUNT,
   });
 
   let saveOrder;

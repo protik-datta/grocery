@@ -69,7 +69,10 @@ const ProductCard = ({ product }) => {
                 ? "bg-[#032E15] hover:bg-[#1B3022]"
                 : "bg-[#F97316] hover:bg-orange-600"
             }`}
-            onClick={() => addItem(product)}
+            onClick={(e) => {
+              e.stopPropagation(),
+              addItem(product)
+            }}
           >
             {quantity > 0 ? (
               <span className="text-xs font-bold">{quantity}</span>

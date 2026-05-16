@@ -49,6 +49,9 @@ const initPayment = asyncHandler(async (req, res) => {
 
   const apiResponse = await sslcz.init(data);
 
+  console.log("SSLCommerz apiResponse:", JSON.stringify(apiResponse, null, 2));
+  console.log("data sent to SSLCommerz:", JSON.stringify(data, null, 2));
+
   if (apiResponse?.GatewayPageURL) {
     order.trx_id = tran_id;
     await order.save();
