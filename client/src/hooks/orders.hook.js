@@ -1,7 +1,12 @@
-import { useMutation } from '@tanstack/react-query';
-import useCartStore from '../store/cartStore';
-import { initPaymentApi, orderProduct } from '../service/orders.api';
-import { showError } from '../utils/toast';
+import { useMutation, useQuery } from "@tanstack/react-query";
+import useCartStore from "../store/cartStore";
+import {
+  getMyOrder,
+  getMyOrderById,
+  initPaymentApi,
+  orderProduct,
+} from "../service/orders.api";
+import { showError } from "../utils/toast";
 
 export const useOrderMutation = () => {
   const clearCart = useCartStore((state) => state.clearCart);
@@ -33,12 +38,11 @@ export const useOrderMutation = () => {
     },
 
     onSuccess: (data) => {
+      clearCart();
       if (data.type === "card" && data.url) {
         window.location.href = data.url;
-        clearCart();
       } else if (data.type === "cash") {
-        window.location.href = `/payment/success?orderId=${data.orderId}`;
-        clearCart();
+        window.location.href = `/orders/${data?.orderId}`;
       }
     },
 
@@ -54,5 +58,39 @@ export const useOrderMutation = () => {
     },
 
     retry: 0,
+  });
+};
+
+export const useRetryPayment = () => {
+  return useMutation({
+    mutationFn: async (orderId) => {
+      const paymentRes = await initPaymentApi(orderId);
+      if (paymentRes?.url) {
+        return paymentRes.url;
+      }
+      throw new Error("Payment initiation failed");
+    },
+    onSuccess: (url) => {
+      window.location.href = url;
+    },
+    onError: () => {
+      showError("Payment initiation failed. Please try again.");
+    },
+  });
+};
+
+export const useMyOrders = () => {
+  return useQuery({
+    queryKey: ["orders"],
+    queryFn: getMyOrder,
+    staleTime: 1000 * 60 * 5,
+  });
+};
+
+export const useMyOrdersById = (id) => {
+  return useQuery({
+    queryKey: ["orders", id],
+    queryFn: () => getMyOrderById(id),
+    enabled: !!id,
   });
 };

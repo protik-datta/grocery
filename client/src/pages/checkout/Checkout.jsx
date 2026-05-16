@@ -7,7 +7,8 @@ import useCartStore from "../../store/cartStore";
 import { useOrderMutation } from "../../hooks/orders.hook";
 
 const Checkout = () => {
-  const { items, deliveryFee, subtotal, totalAmount } = useCartStore();
+  const { items, deliveryFee, subtotal, totalAmount, hasHydrated } =
+    useCartStore();
   const navigate = useNavigate();
 
   const [activeTab, setActiveTab] = useState(1);
@@ -45,6 +46,8 @@ const Checkout = () => {
     };
     processOrder(payload);
   };
+
+  if (!hasHydrated) return null;
 
   if (items.length === 0) {
     return (

@@ -12,7 +12,10 @@ const OrderCard = ({ order }) => {
   const navigate = useNavigate();
 
   return (
-    <div className="w-full md:w-2/3 flex items-stretch justify-between bg-white p-5 rounded-2xl cursor-pointer hover:shadow transition-all border border-gray-100" onClick={()=> navigate(`/orders/${order._id}`)}>
+    <div
+      className="w-full md:w-2/3 flex items-stretch justify-between bg-white p-5 rounded-2xl cursor-pointer hover:shadow transition-all border border-gray-100"
+      onClick={() => navigate(`/orders/${order._id}`)}
+    >
       {/* Left side */}
       <div className="flex flex-col items-start">
         <h3 className="text-[#1B3022] text-[14px] font-medium leading-5">
@@ -50,6 +53,11 @@ const OrderCard = ({ order }) => {
       <div className="flex flex-col justify-between items-end min-w-max">
         <div className="flex justify-end h-fit">
           <div className="flex gap-2 items-center">
+            <span
+              className={`px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap border${order?.isPaid ? "bg-emerald-100 text-emerald-700 border-emerald-200" : "bg-rose-100 text-rose-700 border-rose-200"}`}
+            >
+              {order?.isPaid ? "Paid" : "Unpaid"}
+            </span>
             <span
               className={`px-3 py-1 rounded-full text-[12px] font-medium whitespace-nowrap ${statusColors[order.status] || "bg-gray-100 text-gray-700"}`}
             >

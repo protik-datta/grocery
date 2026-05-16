@@ -65,6 +65,9 @@ const useCartStore = create(
     {
       name: "cart-storage",
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        state.hasHydrated = true;
+      },
     },
   ),
 );

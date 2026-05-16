@@ -4,6 +4,7 @@ const Order = require("../model/order.model");
 const getCoordinates = require("../helpers/getCoordinates");
 const DeliveryPartner = require("../model/deliveryPartner.model");
 const redis = require("../config/redis.config");
+const { clearOrderCaches } = require('../helpers/clearOrderCache');
 
 // create order
 const createOrder = asyncHandler(async (req, res) => {
@@ -65,8 +66,6 @@ const createOrder = asyncHandler(async (req, res) => {
     calculatedSubtotal += product.price * item.quantity;
   }
 
-  const totalAmount = calculatedSubtotal + DELIVERY_FEE - APPLIED_DISCOUNT;
-
   let coordinates;
   try {
     coordinates = await getCoordinates({
@@ -123,10 +122,7 @@ const createOrder = asyncHandler(async (req, res) => {
     throw err;
   }
 
-  await Promise.all([
-    redis.del(`orders:user:${req.user._id}`),
-    redis.del("admin:orders:all"),
-  ]);
+  await clearOrderCaches(null, req.user._id);
 
   res.status(201).json({
     status: "success",
@@ -151,7 +147,7 @@ const getMyOrders = asyncHandler(async (req, res) => {
 
   const orders = await Order.find({ user: req.user._id })
     .sort({ createdAt: -1 })
-    .select("orderNumber status total createdAt items");
+    .select("orderNumber status total createdAt items isPaid paymentMethod");
 
   const responseData = {
     count: orders.length,
@@ -208,7 +204,7 @@ const getOrderById = asyncHandler(async (req, res) => {
   });
 });
 
-// get all order
+// get all orders
 const getAllOrders = asyncHandler(async (req, res) => {
   const cacheKey = "admin:orders:all";
 
@@ -268,38 +264,26 @@ const createDeliveryPartner = asyncHandler(async (req, res) => {
   });
 });
 
-// assign delivery partner to order
+// assign delivery partner
 const assginDeliveryPartner = asyncHandler(async (req, res) => {
   const { orderId, partnerId } = req.body;
 
   const order = await Order.findById(orderId);
   if (!order) {
-    return res.status(404).json({
-      status: false,
-      message: "Order not found",
-    });
+    return res.status(404).json({ status: false, message: "Order not found" });
   }
 
   const partner = await DeliveryPartner.findById(partnerId);
   if (!partner) {
-    return res.status(404).json({
-      status: false,
-      message: "Delivery partner not found",
-    });
+    return res
+      .status(404)
+      .json({ status: false, message: "Delivery partner not found" });
   }
 
   order.deliveryPartner = partner._id;
   await order.pushStatus("Out for Delivery");
 
-  const cacheKey = `order:${order._id}`;
-  const userOrdersCacheKey = `orders:user:${order.user}`;
-  const adminOrdersCacheKey = "admin:orders:all";
-
-  await Promise.all([
-    redis.del(cacheKey),
-    redis.del(userOrdersCacheKey),
-    redis.del(adminOrdersCacheKey),
-  ]);
+  await clearOrderCaches(order._id, order.user);
 
   res.status(200).json({
     status: "success",
@@ -308,17 +292,13 @@ const assginDeliveryPartner = asyncHandler(async (req, res) => {
   });
 });
 
-// update order /:id
+// update order
 const updateOrder = asyncHandler(async (req, res) => {
   const { status } = req.body;
 
   const order = await Order.findById(req.params.id);
-
   if (!order) {
-    return res.status(404).json({
-      status: false,
-      message: "Order not found",
-    });
+    return res.status(404).json({ status: false, message: "Order not found" });
   }
 
   if (status) {
@@ -328,15 +308,7 @@ const updateOrder = asyncHandler(async (req, res) => {
 
   await order.save();
 
-  const cacheKey = `orders:user:${order.user}`;
-  const adminCacheKey = "admin:orders:all";
-  const orderCacheKey = `order:${order._id}`;
-
-  await Promise.all([
-    redis.del(cacheKey),
-    redis.del(adminCacheKey),
-    redis.del(orderCacheKey),
-  ]);
+  await clearOrderCaches(order._id, order.user);
 
   res.status(200).json({
     status: "success",
@@ -348,22 +320,16 @@ const updateOrder = asyncHandler(async (req, res) => {
 // delete order
 const deleteOrder = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id);
-
   if (!order) {
-    return res.status(404).json({
-      status: false,
-      message: "Order not found",
-    });
+    return res.status(404).json({ status: false, message: "Order not found" });
   }
 
   const userId = order.user;
+  const orderId = order._id;
+
   await order.deleteOne();
 
-  await Promise.all([
-    redis.del(`orders:user:${userId}`),
-    redis.del("admin:orders:all"),
-    redis.del(`order:${req.params.id}`),
-  ]);
+  await clearOrderCaches(orderId, userId);
 
   res.status(200).json({
     status: "success",

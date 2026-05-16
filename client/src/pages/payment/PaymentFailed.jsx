@@ -1,25 +1,14 @@
-import { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { XCircle, RefreshCw, ArrowLeft, AlertCircle } from "lucide-react";
 import Container from "../../shared/components/common/Container";
 
 const PaymentFailed = () => {
-  useEffect(() => {
-    // Scroll lock apply kora jate page fixed thake
-    const originalStyle = window.getComputedStyle(document.body).overflow;
-    document.body.style.overflow = "hidden";
-
-    return () => {
-      document.body.style.overflow = originalStyle;
-    };
-  }, []);
-
   return (
-    <main className="fixed inset-0 w-full h-full bg-[#FFF9F9] font-outfit flex flex-col overflow-hidden touch-none">
-      {/* Top accent bar (Red for failure) */}
+    <main className="min-h-screen bg-[#FFF9F9] font-outfit flex flex-col">
+      {/* Top accent bar */}
       <div className="w-full h-1.5 bg-linear-to-r from-[#991B1B] via-[#DC2626] to-[#EF4444] shrink-0" />
 
-      <Container className="flex-1 flex flex-col items-center justify-center">
+      <Container>
         <div className="flex flex-col items-center justify-center py-10 px-4 w-full">
           {/* Failure Icon */}
           <div className="relative mb-8">
@@ -50,7 +39,6 @@ const PaymentFailed = () => {
             <div className="divide-y divide-gray-50">
               {[
                 { label: "Reason", value: "Transaction declined by bank" },
-                { label: "Reference ID", value: "#FAIL-2025-0921" },
                 { label: "Status", value: "Failed", highlight: true },
               ].map(({ label, value, highlight }) => (
                 <div
@@ -59,7 +47,11 @@ const PaymentFailed = () => {
                 >
                   <span className="text-gray-400 text-[13px]">{label}</span>
                   <span
-                    className={`text-[13px] font-medium ${highlight ? "text-red-600 font-semibold" : "text-[#1B3022]"}`}
+                    className={`text-[13px] font-medium ${
+                      highlight
+                        ? "text-red-600 font-semibold"
+                        : "text-[#1B3022]"
+                    }`}
                   >
                     {value}
                   </span>
@@ -70,25 +62,25 @@ const PaymentFailed = () => {
 
           {/* CTA buttons */}
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full max-w-md">
-            <button
-              onClick={() => window.location.reload()} // Simple retry logic
+            <Link
+              to="/checkout"
               className="flex-1 w-full flex items-center justify-center gap-2 bg-[#1B3022] text-white text-[14px] font-medium py-3 rounded-xl hover:opacity-95 transition-all active:scale-95"
             >
               <RefreshCw size={15} />
               Try Again
-            </button>
+            </Link>
             <Link
-              to="/checkout"
+              to="/"
               className="flex-1 w-full flex items-center justify-center gap-2 bg-white border border-[#1B3022]/15 text-[#1B3022] text-[14px] font-medium py-3 rounded-xl hover:bg-gray-50 transition-colors"
             >
               <ArrowLeft size={15} />
-              Go to Checkout
+              Back to Home
             </Link>
           </div>
 
           {/* Support line */}
           <p className="mt-8 text-gray-400 text-[13px] text-center">
-            If your money was deducted, it will be refunded within 3-5 days.{" "}
+            If your money was deducted, it will be refunded within 3–5 days.{" "}
             <Link
               to="/support"
               className="text-[#1B3022] font-medium underline"

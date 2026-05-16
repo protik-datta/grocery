@@ -76,7 +76,7 @@ const paymentSuccess = asyncHandler(async (req, res) => {
     {
       isPaid: true,
       paymentStatus: "Completed",
-      status: "Placed",
+      status: "Confirmed",
     },
     { new: true },
   );
@@ -109,7 +109,7 @@ const paymentIPN = asyncHandler(async (req, res) => {
     if (order && !order.isPaid) {
       order.isPaid = true;
       order.paymentStatus = "Completed";
-      order.status = "Placed";
+      order.status = "Confirmed";
       order.trx_id = bank_tran_id;
       await order.save();
 
