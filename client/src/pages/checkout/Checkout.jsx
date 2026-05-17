@@ -5,6 +5,7 @@ import PaymentStep from "./PaymentStep";
 import ReviewStep from "./ReviewStep";
 import useCartStore from "../../store/cartStore";
 import { useOrderMutation } from "../../hooks/orders.hook";
+import { getBrowserLocation } from '../../utils/getLocation';
 
 const Checkout = () => {
   const { items, deliveryFee, subtotal, totalAmount, hasHydrated } =
@@ -29,7 +30,9 @@ const Checkout = () => {
     setShippingAddress({ ...shippingAddress, [e.target.name]: e.target.value });
   };
 
-  const handlePlaceOrder = () => {
+  const handlePlaceOrder = async() => {
+    const { lat, lng } = await getBrowserLocation();
+
     const payload = {
       items: items.map((i) => ({
         product: i.product._id,
@@ -41,6 +44,8 @@ const Checkout = () => {
         city: shippingAddress.city,
         state: shippingAddress.state,
         zip: shippingAddress.zip,
+        lat,
+        lng,
       },
       paymentMethod: paymentMethod,
     };

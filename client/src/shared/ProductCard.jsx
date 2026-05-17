@@ -9,17 +9,27 @@ const ProductCard = ({ product }) => {
   const quantity = cartItem?.quantity || 0;
 
   const navigate = useNavigate();
+
+  const stockOut = product.stock === 0;
+
   return (
     <div
       className="group bg-white rounded-2xl w-full flex flex-col items-start shadow-[0_1px_3px_0_rgba(0,0,0,0.1),0_1px_2px_-1px_rgba(0,0,0,0.1)] overflow-hidden"
-      onClick={() => navigate(`/products/${product.category.slug}/${product.slug}`)}
+      onClick={() =>
+        navigate(`/products/${product.category.slug}/${product.slug}`)
+      }
     >
       {/* Image Section */}
       <div className="relative w-full aspect-square flex items-center justify-center">
-        {/* Discount Badge */}
         {product.discount > 0 && (
           <span className="absolute top-2.5 left-2.5 bg-[#F97316] text-white text-[10px] font-semibold px-2 py-0.5 rounded-md">
             {product.discount}% OFF
+          </span>
+        )}
+
+        {stockOut && (
+          <span className="absolute top-2.5 right-2.5 bg-red-500 text-white text-[10px] font-semibold px-2 py-0.5 rounded-md">
+            Stock Out
           </span>
         )}
 
@@ -64,15 +74,18 @@ const ProductCard = ({ product }) => {
 
           {/* Add Button */}
           <button
-            className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-white font-bold shadow-sm transition-all active:scale-95 cursor-pointer ${
-              quantity > 0
-                ? "bg-[#032E15] hover:bg-[#1B3022]"
-                : "bg-[#F97316] hover:bg-orange-600"
+            className={`w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-white font-bold shadow-sm transition-all cursor-pointer active:scale-95 ${
+              stockOut
+                ? "bg-gray-300"
+                : quantity > 0
+                  ? "bg-[#032E15] hover:bg-[#1B3022]"
+                  : "bg-[#F97316] hover:bg-orange-600"
             }`}
             onClick={(e) => {
-              e.stopPropagation(),
-              addItem(product)
+              e.stopPropagation();
+              addItem(product);
             }}
+            disabled={stockOut}
           >
             {quantity > 0 ? (
               <span className="text-xs font-bold">{quantity}</span>

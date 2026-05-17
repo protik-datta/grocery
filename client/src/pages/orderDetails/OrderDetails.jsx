@@ -32,8 +32,6 @@ const OrderDetails = () => {
   const { data: orderResponse, isPending, isError } = useMyOrdersById(id);
   const orderData = orderResponse?.data;
 
-  console.log(orderData);
-
   const orderDate = orderData
     ? new Date(orderData.createdAt).toLocaleDateString("en-US", {
         month: "short",

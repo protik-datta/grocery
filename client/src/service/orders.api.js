@@ -2,10 +2,7 @@ import api from "../api/axios";
 
 export const orderProduct = async (payload) => {
   try {
-    const response = await api.post(
-      "/orders/create-order",
-      JSON.stringify(payload),
-    );
+    const response = await api.post("/orders/create-order", payload);
     return response;
   } catch (error) {
     const message = error?.message || "Something error occured";

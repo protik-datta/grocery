@@ -2,6 +2,9 @@ const SSLCommerzPayment = require("sslcommerz-lts");
 const Order = require("../model/order.model");
 const asyncHandler = require("../utils/asyncHandler");
 const redis = require("../config/redis.config");
+const {
+  verifySSLCommerzPayment,
+} = require("../helpers/verifySSLCommerzPayment");
 
 const initPayment = asyncHandler(async (req, res) => {
   const { orderId } = req.body;
@@ -49,9 +52,6 @@ const initPayment = asyncHandler(async (req, res) => {
 
   const apiResponse = await sslcz.init(data);
 
-  console.log("SSLCommerz apiResponse:", JSON.stringify(apiResponse, null, 2));
-  console.log("data sent to SSLCommerz:", JSON.stringify(data, null, 2));
-
   if (apiResponse?.GatewayPageURL) {
     order.trx_id = tran_id;
     await order.save();
@@ -70,8 +70,36 @@ const initPayment = asyncHandler(async (req, res) => {
 
 const paymentSuccess = asyncHandler(async (req, res) => {
   const { tranId } = req.params;
+  const clientUrl = process.env.CLIENT_URL.replace(/\/$/, "");
 
-  const order = await Order.findOneAndUpdate(
+  const isValid = verifySSLCommerzPayment(req.body, process.env.STORE_PASSWORD);
+
+  if (!isValid) {
+    console.warn("Invalid payment signature for tranId:", tranId);
+    return res.redirect(`${clientUrl}/payment/fail?reason=invalid_signature`);
+  }
+
+  if (req.body.status !== "VALID" && req.body.status !== "VALIDATED") {
+    return res.redirect(`${clientUrl}/payment/fail?reason=payment_not_valid`);
+  }
+
+  let order = await Order.findOne({ trx_id: tranId });
+
+  if (!order) {
+    return res.redirect(`${clientUrl}/payment/fail?reason=order_not_found`);
+  }
+
+  const paidAmount = parseFloat(req.body.amount);
+  if (Math.abs(paidAmount - order.total) > 1) {
+    console.warn(`Amount mismatch: expected ${order.total}, got ${paidAmount}`);
+    return res.redirect(`${clientUrl}/payment/fail?reason=amount_mismatch`);
+  }
+
+  if (order.isPaid) {
+    return res.redirect(`${clientUrl}/payment/success?orderId=${order._id}`);
+  }
+
+  order = await Order.findOneAndUpdate(
     { trx_id: tranId },
     {
       isPaid: true,
@@ -82,9 +110,7 @@ const paymentSuccess = asyncHandler(async (req, res) => {
   );
 
   if (!order) {
-    return res.redirect(
-      `${process.env.CLIENT_URL}/payment/fail?reason=order_not_found`,
-    );
+    return res.redirect(`${clientUrl}/payment/fail?reason=order_not_found`);
   }
 
   const cacheKeys = [
@@ -95,9 +121,7 @@ const paymentSuccess = asyncHandler(async (req, res) => {
 
   await Promise.all(cacheKeys.map((key) => redis.del(key)));
 
-  res.redirect(
-    `${process.env.CLIENT_URL}/payment/success?orderId=${order._id}`,
-  );
+  res.redirect(`${clientUrl}/payment/success?orderId=${order._id}`);
 });
 
 const paymentIPN = asyncHandler(async (req, res) => {

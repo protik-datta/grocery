@@ -1,4 +1,5 @@
 import axios from "axios";
+import { showError } from '../utils/toast';
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URI || "http://localhost:3000/api",
@@ -24,11 +25,11 @@ api.interceptors.response.use(
     const isAuthCheck = url.includes("/auth/me");
 
     if (error.response?.status === 401 && !isLogout && !isAuthCheck) {
-      console.error("Session expired. Please login again.");
+      showError("Session expired. Please login again.");
     }
 
     if (error.response?.status === 403) {
-      console.error("You do not have permission to perform this action");
+      showError("You do not have permission to perform this action");
     }
 
     return Promise.reject({

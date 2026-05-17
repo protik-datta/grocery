@@ -51,11 +51,13 @@ const addressSnapshotSchema = new mongoose.Schema(
     },
     lat: {
       type: Number,
-      required: true,
+      required: false,
+      default: null,
     },
     lng: {
       type: Number,
-      required: true,
+      required: false,
+      default: null,
     },
   },
   { _id: false },

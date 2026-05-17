@@ -7,6 +7,8 @@ const ProductInfoDetails = ({ product }) => {
   const { addItem } = useCartStore();
   const [quantity, setQuantity] = useState(1);
 
+  const stockOut = product.stock === 0;
+
   const handleAddToCart = () => {
     addItem(product, quantity);
   };
@@ -28,9 +30,11 @@ const ProductInfoDetails = ({ product }) => {
                 alt={product.name}
                 className="w-60 h-60 lg:w-95 lg:h-95 lg:ml-20 object-contain"
               />
-              <span className="absolute px-2.5 py-1 -top-1 -left-10 lg:left-4 bg-[#F97316] rounded-3xl text-white text-[12px] font-semibold leading-4">
-                {product.discount}% OFF
-              </span>
+              {product.discount > 0 && (
+                <span className="absolute px-2.5 py-1 -top-1 -left-10 lg:left-4 bg-[#F97316] rounded-3xl text-white text-[12px] font-semibold leading-4">
+                  {product.discount}% OFF
+                </span>
+              )}
             </div>
           </div>
 
@@ -84,17 +88,26 @@ const ProductInfoDetails = ({ product }) => {
             </p>
 
             {/* stock */}
-            <p className="text-[#22C55E] text-[14px] font-medium leading-5 mt-7">
-              ✓ In Stock ({product.stock} available)
-            </p>
+            {stockOut ? (
+              <p className="text-red-500 text-[14px] font-medium leading-5 mt-7">
+                ✕ Out of Stock
+              </p>
+            ) : (
+              <p className="text-[#22C55E] text-[14px] font-medium leading-5 mt-7">
+                ✓ In Stock ({product.stock} available)
+              </p>
+            )}
 
             {/* quantity and cart button */}
             <div className="flex items-center gap-3 sm:gap-6 py-5 w-2/3">
-              {/* Quantity Selector - Fixed width on all screens */}
-              <div className="flex items-center border border-gray-200 rounded-xl overflow-hidden bg-gray-50 shrink-0">
+              {/* Quantity Selector */}
+              <div
+                className={`flex items-center border rounded-xl overflow-hidden shrink-0 ${stockOut ? "border-gray-100 bg-gray-50 opacity-40" : "border-gray-200 bg-gray-50"}`}
+              >
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
-                  className="w-10 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors text-xl font-light"
+                  disabled={stockOut}
+                  className="w-10 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors text-xl font-light cursor-pointer"
                 >
                   −
                 </button>
@@ -103,7 +116,8 @@ const ProductInfoDetails = ({ product }) => {
                 </span>
                 <button
                   onClick={() => setQuantity((q) => q + 1)}
-                  className="w-10 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors text-xl font-light"
+                  disabled={stockOut}
+                  className="w-10 h-11 sm:w-12 sm:h-12 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors text-xl font-light cursor-pointer"
                 >
                   +
                 </button>
@@ -112,7 +126,10 @@ const ProductInfoDetails = ({ product }) => {
               {/* Add to Cart Button */}
               <button
                 onClick={handleAddToCart}
-                className="flex-1 flex justify-center bg-[#F97316] py-3 sm:py-3.5 px-6 sm:px-8 rounded-2xl items-center gap-2 transition-all hover:bg-[#ea6605] active:scale-95 cursor-pointer"
+                disabled={stockOut}
+                className={`flex-1 flex justify-center py-3 sm:py-3.5 px-6 sm:px-8 rounded-2xl items-center gap-2 transition-all cursor-pointer active:scale-95 ${
+                  stockOut ? "bg-gray-300 " : "bg-[#F97316] hover:bg-[#ea6605] "
+                }`}
               >
                 <img
                   src={assets.cart}
@@ -120,7 +137,7 @@ const ProductInfoDetails = ({ product }) => {
                   className="brightness-0 invert w-5 h-5"
                 />
                 <h4 className="text-white text-[13px] sm:text-sm font-semibold whitespace-nowrap">
-                  Add to Cart
+                  {stockOut ? "Out of Stock" : "Add to Cart"}
                 </h4>
               </button>
             </div>

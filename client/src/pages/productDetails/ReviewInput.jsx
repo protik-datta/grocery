@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { assets } from "../../assets/assets";
 import { usePostReview } from "../../hooks/productApi.hook";
+import { showError } from '../../utils/toast';
 
 // Prop-e onSubmit add kora holo
 const ReviewInput = ({ product, onSubmit }) => {
@@ -60,7 +61,7 @@ const ReviewInput = ({ product, onSubmit }) => {
           setSubmitted(true);
         },
         onError: (err) => {
-          console.error("Review submission failed", err);
+          showError("Review submission failed");
         },
       },
     );

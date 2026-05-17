@@ -4,7 +4,7 @@ const Order = require("../model/order.model");
 const getCoordinates = require("../helpers/getCoordinates");
 const DeliveryPartner = require("../model/deliveryPartner.model");
 const redis = require("../config/redis.config");
-const { clearOrderCaches } = require('../helpers/clearOrderCache');
+const { clearOrderCaches } = require("../helpers/clearOrderCache");
 
 const TAX_RATE = 0.05;
 
@@ -68,30 +68,10 @@ const createOrder = asyncHandler(async (req, res) => {
     calculatedSubtotal += product.price * item.quantity;
   }
 
-  const calculatedTax = Math.round(calculatedSubtotal * TAX_RATE)
+  const calculatedTax = Math.round(calculatedSubtotal * TAX_RATE);
 
-  let coordinates;
-  try {
-    coordinates = await getCoordinates({
-      address: shippingAddress.address,
-      city: shippingAddress.city,
-      state: shippingAddress.state,
-      zip: shippingAddress.zip,
-    });
-  } catch (error) {
-    await Product.bulkWrite(
-      reservedItems.map(({ productId, quantity }) => ({
-        updateOne: {
-          filter: { _id: productId },
-          update: { $inc: { stock: quantity } },
-        },
-      })),
-    );
-    return res.status(400).json({
-      success: false,
-      message: "Could not fetch coordinates for the provided address.",
-    });
-  }
+  const lat = shippingAddress.lat || null;
+  const lng = shippingAddress.lng || null;
 
   const newOrder = new Order({
     user: req.user._id,
@@ -102,8 +82,8 @@ const createOrder = asyncHandler(async (req, res) => {
       city: shippingAddress.city,
       state: shippingAddress.state,
       zip: shippingAddress.zip,
-      lat: coordinates.lat,
-      lng: coordinates.lng,
+      lat,
+      lng
     },
     paymentMethod,
     tax: calculatedTax,
