@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import api from "../api/axios";
-import { showError } from "../utils/toast";
+import { showError, showSuccess } from "../utils/toast";
 
 const logoutUser = async () => {
   try {
@@ -17,9 +17,10 @@ export const useLogout = () => {
 
   return useMutation({
     mutationFn: logoutUser,
-    onSuccess: () => {
+    onSuccess: (data) => {
       queryClient.setQueryData(["me"], null);
       queryClient.removeQueries({ queryKey: ["me"] });
+      showSuccess(data?.message)
     },
   });
 };

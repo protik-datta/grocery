@@ -1,18 +1,17 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { showError } from '../../../utils/toast';
-import { loginUser } from './login.api';
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { showError } from "../../../utils/toast";
+import { loginUser } from "./login.api";
 
 export const useLogin = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
     mutationFn: loginUser,
-    onSuccess: (data) => {
-      queryClient.invalidateQueries({queryKey: ["me"]})
-      console.log(data)
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["me"] });
     },
     onError: (error) => {
       showError(error?.message || "Login failed");
     },
-  })
+  });
 };
