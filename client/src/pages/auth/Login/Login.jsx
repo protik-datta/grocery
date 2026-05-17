@@ -28,27 +28,30 @@ const Login = () => {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen p-12 bg-[#F8F8F5]">
-      <div className="w-full max-w-md bg-white rounded-3xl shadow-sm border border-gray-100 p-10 text-center">
+    <div className="flex justify-center items-center min-h-screen px-4 py-10 bg-[#F8F8F5]">
+      <div className="w-full max-w-md bg-white rounded-3xl shadow-sm border border-gray-100 px-6 py-10 sm:px-10 text-center">
         <img
           src={assets.logo}
           alt="Logo"
-          className="w-32 mx-auto object-contain mb-8"
+          className="w-24 sm:w-32 mx-auto object-contain mb-6 sm:mb-8"
         />
 
-        <h3 className="text-[#1B3022] text-[28px] font-semibold tracking-tight">
+        <h3 className="text-[#1B3022] text-2xl sm:text-[28px] font-semibold tracking-tight">
           Sign in to your account
         </h3>
 
-        <p className="text-gray-500 mt-3 text-sm">
+        <p className="text-gray-500 mt-2 sm:mt-3 text-sm">
           Welcome back! Please enter your details.
         </p>
 
-        <form className="mt-8 space-y-5" onSubmit={handleSubmit} method="POST">
+        <form
+          className="mt-6 sm:mt-8 space-y-4 sm:space-y-5"
+          onSubmit={handleSubmit}
+        >
           <input
             type="email"
             placeholder="Email address"
-            className="w-full h-13 px-4 rounded-xl border border-gray-200 outline-none focus:border-[#1B3022]"
+            className="w-full h-12 sm:h-13 px-4 rounded-xl border border-gray-200 outline-none focus:border-[#1B3022] text-sm sm:text-base"
             name="email"
             value={form.email}
             onChange={handleChange}
@@ -57,7 +60,7 @@ const Login = () => {
           <input
             type="password"
             placeholder="Password"
-            className="w-full h-13 px-4 rounded-xl border border-gray-200 outline-none focus:border-[#1B3022]"
+            className="w-full h-12 sm:h-13 px-4 rounded-xl border border-gray-200 outline-none focus:border-[#1B3022] text-sm sm:text-base"
             name="password"
             value={form.password}
             onChange={handleChange}
@@ -66,14 +69,14 @@ const Login = () => {
           <button
             type="submit"
             disabled={isPending}
-            className="w-full h-13 rounded-xl bg-[#1B3022] text-white font-medium hover:opacity-90 transition"
+            className="w-full h-12 sm:h-13 rounded-xl bg-[#1B3022] text-white text-sm sm:text-base font-medium hover:opacity-90 transition"
           >
             {isPending ? "Signing in..." : "Sign in"}
           </button>
         </form>
 
-        <p className="text-sm text-gray-500 mt-6">
-          Don’t have an account?
+        <p className="text-sm text-gray-500 mt-5 sm:mt-6">
+          Don't have an account?
           <Link
             to="/register"
             className="text-[#1B3022] font-medium cursor-pointer ml-1"
