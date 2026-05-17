@@ -83,7 +83,6 @@ export const useMyOrders = () => {
   return useQuery({
     queryKey: ["orders"],
     queryFn: getMyOrder,
-    staleTime: 1000 * 60 * 5,
   });
 };
 

@@ -6,6 +6,8 @@ const DeliveryPartner = require("../model/deliveryPartner.model");
 const redis = require("../config/redis.config");
 const { clearOrderCaches } = require('../helpers/clearOrderCache');
 
+const TAX_RATE = 0.05;
+
 // create order
 const createOrder = asyncHandler(async (req, res) => {
   const { items, shippingAddress, paymentMethod } = req.body;
@@ -66,6 +68,8 @@ const createOrder = asyncHandler(async (req, res) => {
     calculatedSubtotal += product.price * item.quantity;
   }
 
+  const calculatedTax = Math.round(calculatedSubtotal * TAX_RATE)
+
   let coordinates;
   try {
     coordinates = await getCoordinates({
@@ -102,6 +106,7 @@ const createOrder = asyncHandler(async (req, res) => {
       lng: coordinates.lng,
     },
     paymentMethod,
+    tax: calculatedTax,
     subtotal: calculatedSubtotal,
     deliveryFee: DELIVERY_FEE,
     discount: APPLIED_DISCOUNT,
@@ -120,6 +125,16 @@ const createOrder = asyncHandler(async (req, res) => {
       })),
     );
     throw err;
+  }
+
+  const [productKeys, slugKeys] = await Promise.all([
+    redis.keys("products:*"),
+    redis.keys("product:*"),
+  ]);
+
+  const keysToDelete = [...productKeys, ...slugKeys].filter(Boolean);
+  if (keysToDelete.length > 0) {
+    await redis.del(keysToDelete);
   }
 
   await clearOrderCaches(null, req.user._id);

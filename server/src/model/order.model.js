@@ -147,7 +147,6 @@ const orderSchema = new mongoose.Schema(
     },
     tax: {
       type: Number,
-      default: 5, // default 5% tax
     },
     discount: {
       type: Number,
@@ -173,7 +172,7 @@ orderSchema.pre("save", function () {
   this.total = +(
     this.subtotal +
     this.deliveryFee +
-    (this.subtotal * this.tax) / 100 -
+    this.tax -
     this.discount
   ).toFixed(2);
 });

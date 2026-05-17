@@ -16,7 +16,7 @@ const Reviews = ({ product }) => {
   return (
     <div className="p-4 md:p-8 mb-6 md:mb-10 space-y-8 md:space-y-10">
       {reviews.length > 0 ? (
-        reviews.map((review) => {
+        reviews.map((review,index) => {
           const formattedDate = new Date(review.createdAt).toLocaleDateString(
             "en-US",
             {
@@ -37,7 +37,7 @@ const Reviews = ({ product }) => {
             : 0;
 
           return (
-            <div key={review._id} className="flex items-start gap-3 md:gap-4">
+            <div key={index} className="flex items-start gap-3 md:gap-4">
               <span className="shrink-0 flex items-center justify-center w-9 h-9 md:w-10 md:h-10 rounded-full bg-[#1B3022]/10 text-[#1B3022] text-[13px] font-semibold">
                 {userName
                   .split(" ")

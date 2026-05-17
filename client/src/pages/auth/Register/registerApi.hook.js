@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { showError, showSuccess } from "../../../utils/toast";
+import { showError } from "../../../utils/toast";
 import { registerUser } from "./register.api";
 
 export const useRegister = () => {
@@ -9,7 +9,6 @@ export const useRegister = () => {
     mutationFn: registerUser,
     onSuccess: (data) => {
       queryClient.invalidateQueries({ queryKey: ["me"] });
-      showSuccess(data?.message || "Registration Successful!");
     },
     onError: (error) => {
       showError(error?.message);

@@ -56,10 +56,9 @@ export const usePostReview = () => {
   });
 };
 
-export const useHelpful = (productId, userId) => {
+export const useHelpful = (productId, userId, queryKey) => {
   const queryClient = useQueryClient();
 
-  // Patches a single review inside whatever shape the cache holds
   const patchReview = (cached, updatedReview) => {
     const isWrapped = cached?.data !== undefined;
     const product = isWrapped ? cached.data : cached;
@@ -72,7 +71,6 @@ export const useHelpful = (productId, userId) => {
     return isWrapped ? { ...cached, data: updated } : updated;
   };
 
-  // Optimistic toggle — flips locally before request lands
   const optimisticToggle = (cached, reviewId) => {
     const isWrapped = cached?.data !== undefined;
     const product = isWrapped ? cached.data : cached;
@@ -98,31 +96,31 @@ export const useHelpful = (productId, userId) => {
     mutationFn: postHelpful,
 
     onMutate: async (reviewId) => {
-      await queryClient.cancelQueries({ queryKey: ["product"] });
-      const snapshots = [];
-      queryClient.setQueriesData({ queryKey: ["product"] }, (old, key) => {
-        snapshots.push({ key, value: old });
-        return optimisticToggle(old, reviewId);
-      });
+      await queryClient.cancelQueries({ queryKey });
+      const snapshot = queryClient.getQueryData(queryKey);
 
-      return { snapshots };
+      queryClient.setQueryData(queryKey, (old) =>
+        optimisticToggle(old, reviewId),
+      );
+
+      return { snapshot };
     },
+
     onSuccess: (res) => {
       const updatedReview = res?.data;
       if (!updatedReview) return;
 
-      queryClient.setQueriesData({ queryKey: ["product"] }, (old) =>
+      queryClient.setQueryData(queryKey, (old) =>
         patchReview(old, updatedReview),
       );
     },
+
     onError: (_err, _reviewId, context) => {
-      context?.snapshots?.forEach(({ key, value }) => {
-        queryClient.setQueryData(key, value);
-      });
+      queryClient.setQueryData(queryKey, context?.snapshot);
     },
 
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["product"] });
+      queryClient.invalidateQueries({ queryKey });
     },
   });
 };

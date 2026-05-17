@@ -1,13 +1,21 @@
-const redis = require('../config/redis.config')
+const redis = require("../config/redis.config");
 
 const clearOrderCaches = async (orderId, userId) => {
-  const keys = [
-    orderId ? `order:${orderId}` : null,
-    userId ? `orders:user:${userId}` : null,
-    "admin:orders:all",
-  ].filter(Boolean);
+  const keysToDelete = [];
 
-  await Promise.all(keys.map((key) => redis.del(key)));
+  if (orderId) {
+    keysToDelete.push(`order:${orderId}`);
+  }
+
+  if (userId) {
+    keysToDelete.push(`orders:user:${userId}`);
+  }
+
+  keysToDelete.push("admin:orders:all");
+
+  if (keysToDelete.length > 0) {
+    await redis.del(keysToDelete);
+  }
 };
 
 module.exports = { clearOrderCaches };
