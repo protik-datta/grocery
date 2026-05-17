@@ -1,6 +1,6 @@
 import { Link, useNavigate } from "react-router-dom";
 import { assets } from "../../../assets/assets";
-import { useLogin } from "./LoginApi.hook";
+import { useLogin } from "./loginApi.hook";
 import { useState } from "react";
 import { showSuccess } from "../../../utils/toast";
 

@@ -1,6 +1,5 @@
 import { MapPinIcon, PhoneIcon, MailIcon } from "lucide-react";
-
-import hero_bg from "./Hero.png";
+import hero_bg from './hero.png'
 import delivery_truck from "./delivery_truck.svg";
 import fruits_vegetables from "./fruits_vegetables.png";
 import dairy_eggs from "./dairy_eggs.png";

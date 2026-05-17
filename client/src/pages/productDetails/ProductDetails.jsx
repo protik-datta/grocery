@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import ProductBreadCrumb from "./ProductBreadcrumb";
 import ProductInfoDetails from "./ProductInfoDetails";
 import ProductReview from "./ProductReview";
 import RelatedProducts from "./RelatedProducts";
 import { useProductBySlug, useProducts } from "../../hooks/productApi.hook";
 import Loader from '../../utils/Loader';
+import ProductBreadCrumb from './ProductBreadCrumb';
 
 const ProductDetails = () => {
   const { category, slug } = useParams();
