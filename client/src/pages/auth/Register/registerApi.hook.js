@@ -8,7 +8,7 @@ export const useRegister = () => {
   return useMutation({
     mutationFn: registerUser,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["me"] });
+      queryClient.refetchQueries({ queryKey: ["me"] });
     },
     onError: (error) => {
       showError(error?.message);

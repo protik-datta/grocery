@@ -28,6 +28,7 @@ export const useAuth = () => {
     },
     retry: false,
     staleTime: 1000 * 60 * 5,
+    refetchOnWindowFocus: false,
   });
 
   return {
