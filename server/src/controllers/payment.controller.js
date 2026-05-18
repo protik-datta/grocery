@@ -75,8 +75,7 @@ const paymentSuccess = asyncHandler(async (req, res) => {
   console.log("tranId from params:", tranId);
   console.log("trx_id in body:", req.body?.tran_id);
 
-  const order = await Order.findOne({ trx_id: tranId });
-  console.log("order found:", order?._id);
+
 
   const isValid = verifySSLCommerzPayment(req.body, process.env.STORE_PASSWORD);
 
@@ -111,6 +110,7 @@ const paymentSuccess = asyncHandler(async (req, res) => {
       isPaid: true,
       paymentStatus: "Completed",
       status: "Confirmed",
+      bank_tran_id: req.body.bank_tran_id,
     },
     { new: true },
   );
@@ -140,7 +140,7 @@ const paymentIPN = asyncHandler(async (req, res) => {
       order.isPaid = true;
       order.paymentStatus = "Completed";
       order.status = "Confirmed";
-      order.trx_id = bank_tran_id;
+      order.bank_tran_id = bank_tran_id;
       await order.save();
 
       await Promise.all([

@@ -166,6 +166,10 @@ const orderSchema = new mongoose.Schema(
       type: String,
       trim: true,
     },
+    bank_tran_id: {
+      type: String,
+      trim: true,
+    },
   },
   { timestamps: true },
 );
