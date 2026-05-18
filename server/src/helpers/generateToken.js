@@ -14,7 +14,7 @@ const setAuthCookie = (res, token) => {
 };
 
 const clearAuthCookie = (res) => {
-  res.clearCookie("token", "", {
+  res.clearCookie("token", {
     httpOnly: true,
     secure: true,
     sameSite: "none",
