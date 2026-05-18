@@ -8,6 +8,7 @@ const baseStyle = {
 
 export const showSuccess = (message) => {
   toast.success(message, {
+    id: message,
     duration: 3000,
     style: {
       ...baseStyle,
@@ -23,6 +24,7 @@ export const showSuccess = (message) => {
 
 export const showError = (message) => {
   toast.error(message, {
+    id: message,
     duration: 4000,
     style: {
       ...baseStyle,

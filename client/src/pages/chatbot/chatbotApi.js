@@ -5,6 +5,6 @@ export const sendChatMessage = async (messageText) => {
     const response = await api.post("/chat", { message: messageText });
     return response.data;
   } catch (error) {
-    throw new error();
+    throw error;
   }
 };

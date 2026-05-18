@@ -162,8 +162,10 @@ const getOrderById = asyncHandler(async (req, res) => {
     const cachedData = JSON.parse(cached);
     const orderData = cachedData.data || cachedData;
 
+    const orderUserId = orderData.user?._id || orderData.user;
+
     if (
-      orderData.user._id.toString() !== req.user._id.toString() &&
+      orderUserId?.toString() !== req.user._id.toString() &&
       req.user.role !== "admin"
     ) {
       return res
