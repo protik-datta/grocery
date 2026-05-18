@@ -1,7 +1,7 @@
 const redis = require("../config/redis.config");
 const AppError = require("../utils/AppError");
 
-const LIMIT = 300;
+const LIMIT = 10;
 const BLOCK_DURATION = 60 * 60 * 10;
 
 const chatRateLimit = async (req, res, next) => {
@@ -23,7 +23,7 @@ const chatRateLimit = async (req, res, next) => {
       ),
     );
   }
-  
+
   next();
 };
 
