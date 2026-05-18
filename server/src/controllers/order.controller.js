@@ -5,6 +5,7 @@ const getCoordinates = require("../helpers/getCoordinates");
 const DeliveryPartner = require("../model/deliveryPartner.model");
 const redis = require("../config/redis.config");
 const { clearOrderCaches } = require("../helpers/clearOrderCache");
+const { clearCacheByPattern } = require("../utils/cache");
 
 const TAX_RATE = 0.05;
 
@@ -107,15 +108,10 @@ const createOrder = asyncHandler(async (req, res) => {
     throw err;
   }
 
-  const [productKeys, slugKeys] = await Promise.all([
-    redis.keys("products:*"),
-    redis.keys("product:*"),
+  await Promise.all([
+    clearCacheByPattern("products:*"),
+    clearCacheByPattern("product:*")
   ]);
-
-  const keysToDelete = [...productKeys, ...slugKeys].filter(Boolean);
-  if (keysToDelete.length > 0) {
-    await redis.del(keysToDelete);
-  }
 
   await clearOrderCaches(null, req.user._id);
 
@@ -164,10 +160,21 @@ const getOrderById = asyncHandler(async (req, res) => {
 
   if (cached) {
     const cachedData = JSON.parse(cached);
+    const orderData = cachedData.data || cachedData;
+
+    if (
+      orderData.user._id.toString() !== req.user._id.toString() &&
+      req.user.role !== "admin"
+    ) {
+      return res
+        .status(403)
+        .json({ success: false, message: "Not authorized to view this order" });
+    }
+
     return res.status(200).json({
       status: "success",
       source: "cache",
-      data: cachedData.data || cachedData,
+      data: orderData,
     });
   }
 

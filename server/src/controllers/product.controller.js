@@ -10,7 +10,7 @@ const {
   updateProductSchema,
 } = require("../validation/product.validation");
 const Product = require("../model/product.model");
-const { invalidateCache } = require("../utils/cache");
+const { invalidateCache, clearCacheByPattern } = require("../utils/cache");
 const redis = require("../config/redis.config");
 const Category = require("../model/category.model");
 
@@ -197,13 +197,11 @@ const updateProduct = asyncHandler(async (req, res) => {
     `product:${req.params.id}`
   ];
 
-  const filterKeys = await redis.keys("products:*");
-
   await Promise.all([
     invalidateCache(oldCategory),
     parsed.data.category && parsed.data.category !== oldCategory ? invalidateCache(parsed.data.category) : null,
     ...keysToDelete.map(key => redis.del(key)),
-    filterKeys.length > 0 ? redis.del(filterKeys) : null
+    clearCacheByPattern("products:*")
   ]);
 
   res.status(200).json({ status: "success", data: updated });

@@ -2,6 +2,7 @@ const Review = require("../model/review.model");
 const Product = require("../model/product.model");
 const asyncHandler = require("../utils/asyncHandler");
 const redis = require("../config/redis.config");
+const { clearCacheByPattern } = require("../utils/cache");
 
 const createReview = asyncHandler(async (req, res) => {
   const { productId } = req.params;
@@ -35,11 +36,9 @@ const createReview = asyncHandler(async (req, res) => {
 
   const keysToDelete = [`product:slug:${product.slug}`, `product:${productId}`];
 
-  const filterKeys = await redis.keys("products:*");
-
   await Promise.all([
     ...keysToDelete.map((key) => redis.del(key)),
-    filterKeys.length > 0 ? redis.del(filterKeys) : Promise.resolve(),
+    clearCacheByPattern("products:*"),
   ]);
 
   res.status(201).json({
@@ -70,6 +69,19 @@ const toggleReview = asyncHandler(async (req, res) => {
   }
 
   await review.save();
+
+  const product = await Product.findById(review.product);
+  if (product) {
+    const keysToDelete = [
+      `product:slug:${product.slug}`,
+      `product:${product._id}`,
+    ];
+    await Promise.all([
+      ...keysToDelete.map((key) => redis.del(key)),
+      clearCacheByPattern("products:*"),
+    ]);
+  }
+
   res.status(200).json({ status: true, data: review });
 });
 
@@ -99,11 +111,10 @@ const deleteReview = asyncHandler(async (req, res) => {
       `product:slug:${product.slug}`,
       `product:${product._id}`,
     ];
-    const filterKeys = await redis.keys("products:*");
 
     await Promise.all([
       ...keysToDelete.map((key) => redis.del(key)),
-      filterKeys.length > 0 ? redis.del(filterKeys) : Promise.resolve(),
+      clearCacheByPattern("products:*"),
     ]);
   }
 
