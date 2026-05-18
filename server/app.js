@@ -50,17 +50,6 @@ app.use(
   }),
 );
 
-// connect to database
-const connectDB = require("./src/config/db.config");
-connectDB();
-
-// connect to redis
-const redis = require("./src/config/redis.config");
-
-// global error handler
-const errorHandler = require("./src/middlewares/errorHandler.middleware");
-app.use(errorHandler);
-
 // health check api
 app.get("/api/health", (req, res) => {
   res.status(200).json({
@@ -85,5 +74,9 @@ app.use("/api/v1/payment", paymentRoutes);
 const reviewRoutes = require("./src/routes/review.routes");
 app.use("/api/reviews", reviewRoutes);
 // ------- routes -------- //
+
+// global error handler
+const errorHandler = require("./src/middlewares/errorHandler.middleware");
+app.use(errorHandler);
 
 module.exports = app;
