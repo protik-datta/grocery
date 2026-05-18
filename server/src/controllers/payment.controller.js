@@ -72,6 +72,12 @@ const paymentSuccess = asyncHandler(async (req, res) => {
   const { tranId } = req.params;
   const clientUrl = process.env.CLIENT_URL.replace(/\/$/, "");
 
+  console.log("tranId from params:", tranId);
+  console.log("trx_id in body:", req.body?.tran_id);
+
+  const order = await Order.findOne({ trx_id: tranId });
+  console.log("order found:", order?._id);
+
   const isValid = verifySSLCommerzPayment(req.body, process.env.STORE_PASSWORD);
 
   if (!isValid) {
